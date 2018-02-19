@@ -7,10 +7,6 @@ const UserSchema = mongoose.Schema({
     name: {
         type: String
     },
-    password: {
-        type: String,
-        required:true
-    },
     type: {
         type: String
     },
@@ -20,6 +16,10 @@ const UserSchema = mongoose.Schema({
     email: {
         type: String,
         required: true
+    },
+    password: {
+        type: String,
+        required:true
     }
 });
 
@@ -30,7 +30,7 @@ module.exports.getUserById = function(id, callback) {
 }
 
 module.exports.getUserByUserName = function(username, callback) {
-    const query = {username: username}
+    const query = {name: username}
     User.findOne(query, callback);
 }
 
@@ -41,5 +41,12 @@ module.exports.addUser = function(newUser, callback) {
             newUser.password = hash;
             newUser.save(callback);
         });
+    });
+}
+
+module.exports.comparePassword = function(candidatepassword, hash, callback) {
+    bcrypt.compare(candidatepassword, hash, function(err, isMatch) {
+        if(err) throw err;
+        callback(null, isMatch);
     });
 }

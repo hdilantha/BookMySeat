@@ -19,6 +19,10 @@ mongoose.connection.on('error', (err) => {
 const app = express();
 
 const users = require('./routes/users');
+const buses = require('./routes/buses');
+const turns = require('./routes/turns');
+const routes = require('./routes/routes');
+const bookings = require('./routes/bookings');
 
 // Port Number
 const port = 3000;
@@ -32,11 +36,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Body Parser Middleware
 app.use(bodyParser.json());
 
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./config/passport')(passport);
+
 app.use('/users', users);
+app.use('/buses', buses);
+app.use('/turns', turns);
+app.use('/routes', routes);
+app.use('/bookings', bookings);
 
 // Index Route
 app.get('/', (req, res) => {
     res.send('Invalid endpoint');
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 // Start Server
