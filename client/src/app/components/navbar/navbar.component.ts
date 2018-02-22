@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  type: any;
 
   constructor(private flashMessage: FlashMessagesService,
     private authService: AuthService,
@@ -22,5 +23,13 @@ export class NavbarComponent implements OnInit {
     this.flashMessage.show('You are logged out', {cssClass: 'alert-success', timeout: 3000});
     this.router.navigate(['login']);
     return false;
+  }
+
+  isAdmin() {
+    if(this.type == 'admin') {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
