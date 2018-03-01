@@ -15,14 +15,21 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ValidateService } from './services/validate.service';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { AuthService } from './services/auth.service';
+import { RouteService } from './services/route.service';
 import { AuthGuard } from './guards/auth.guard';
+import { ViewUsersComponent } from './components/view-users/view-users.component';
+import { AddRouteComponent } from './components/add-route/add-route.component';
+import { ViewRoutesComponent } from './components/view-routes/view-routes.component';
 
 const appRoutes: Routes = [
   {path:'', component: HomeComponent},
   {path:'register', component: RegisterComponent},
   {path:'login', component: LoginComponent},
   {path:'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
-  {path:'profile', component: ProfileComponent, canActivate: [AuthGuard]}
+  {path:'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  {path:'viewuser', component: ViewUsersComponent, canActivate: [AuthGuard]},
+  {path:'addroute', component: AddRouteComponent, canActivate: [AuthGuard]},
+  {path:'viewroute', component: ViewRoutesComponent, canActivate: [AuthGuard]}
 ]
 @NgModule({
   declarations: [
@@ -32,7 +39,10 @@ const appRoutes: Routes = [
     RegisterComponent,
     HomeComponent,
     DashboardComponent,
-    ProfileComponent
+    ProfileComponent,
+    ViewUsersComponent,
+    AddRouteComponent,
+    ViewRoutesComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +51,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule
   ],
-  providers: [ValidateService, AuthService, AuthGuard],
+  providers: [ValidateService, AuthService, AuthGuard, RouteService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

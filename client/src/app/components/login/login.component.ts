@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  username: String;
+  email: String;
   password: String;
 
   constructor(private flashMessage: FlashMessagesService,
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
 
   onLoginSubmit() {
     const user = {
-      username: this.username,
+      email: this.email,
       password: this.password
     }
 

@@ -1,25 +1,56 @@
-<div class="jumbotron text-center">
+<div class="jumbotron text-center" style="background-image: url(../../assets/home.jpg); background-position: center; background-size:100%; background-repeat: no-repeat">
   <h1>BookMySeat</h1>
   <h2>Online Bus Booking Platform</h2>
-  <p class = "lead"> Welcome to the most powerful bus booking platform in Sri Lanka</p>
+  <p class = "lead">Welcome to the most popular bus booking platform in Sri Lanka</p>
+  <div class="row">
+    <div class="col-md-4">
+      <input type="text" name="" class="form-control" value="" placeholder="Starting location">
+    </div>
+    <div class="col-md-4">
+      <input type="text" name="" class="form-control" value="" placeholder="Destination">
+    </div>
+    <div class="col-md-4">
+      <input type="date" name="" class="form-control" value="" placeholder="Date">
+    </div>
+  </div>
+  <br>
   <div>
-    <a class = "btn btn-primary" [routerLink] = "['/register']">Register</a> <a class = "btn btn-primary" [routerLink] = "['/login']">Login</a>
+    <a class = "btn btn-primary" [routerLink] = "['/']">Search</a>
   </div>
 </div>
 
-<div>
-  <div class="row">
-    <div class="col-md-4">
-      <h3>Express Backend</h3>
-      <p>A rock solid blah blah blah</p>
+<br>
+<div class="row">
+  <h3>Popular destinations</h3>
+  <br>
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img src="../../assets/meemure.jpg" alt="...">
+      <div class="caption">
+        <h3>Kandy</h3>
+        <p>Kandy is a large city in central Sri Lanka. It's set on a plateau surrounded by mountains, which are home to tea plantations and biodiverse rainforest. The city's heart is scenic Kandy Lake (Bogambara Lake), which is popular for strolling. Kandy is famed for sacred Buddhist sites, including the Temple of the Tooth (Sri Dalada Maligawa) shrine, celebrated with the grand Esala Perahera annual procession.</p>
+        <p><a href="#" class="btn btn-default" role="button">Search Buses</a></p>
+      </div>
     </div>
-    <div class="col-md-4">
-      <h3>Angular-CLI</h3>
-      <p>Angular-CLI to generate components blah blah blah</p>
+  </div>
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img src="../../assets/ella.jpg" alt="...">
+      <div class="caption">
+        <h3>Jaffna</h3>
+        <p>Jaffna is a city on the northern tip of Sri Lanka. Nallur Kandaswamy is a huge Hindu temple with golden arches and an ornate gopuram tower. By the coast, star-shaped Jaffna Fort was built by the Portuguese in the 17th century and later occupied by the Dutch and British. Jaffna Public Library is a symbol of the city’s post-war regeneration. Jaffna Archaeological Museum has Dutch cannons and pre-colonial artifacts.</p>
+        <p><a href="#" class="btn btn-default" role="button">Search Buses</a></p>
+      </div>
     </div>
-    <div class="col-md-4">
-      <h3>JWT tokens</h3>
-      <p>Full featured authentication using JSON blah blah blah</p>
+  </div>
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img src="../../assets/riverston.jpg" alt="...">
+      <div class="caption">
+        <h3>Kataragama</h3>
+        <p>Kataragama is a pilgrimage town sacred to Buddhist, Hindu, Muslim and indigenous Vedda people of Sri Lanka. People from South India also go there to worship.</p>
+        <p> <a href="#" class="btn btn-default" role="button">Search Buses</a></p>
+      </div>
     </div>
   </div>
 </div>

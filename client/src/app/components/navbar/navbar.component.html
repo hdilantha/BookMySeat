@@ -11,14 +11,50 @@
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav navbar-left">
-        <li [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/']">Home</a></li>
+        <li *ngIf="!authService.loggedIn()" [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/']">Home</a></li>
+
+        <li *ngIf="authService.loggedIn() && isAdmin()" class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Users <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/register']">Register</a></li>
+            <li [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/viewuser']">View Users</a></li>
+            <!-- <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li> -->
+          </ul>
+        </li>
+        <li *ngIf="authService.loggedIn() && isAdmin()" class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Routes <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/addroute']">Add route</a></li>
+            <li [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/viewroute']">View Routes</a></li>
+            <!-- <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li> -->
+          </ul>
+        </li>
+        <li *ngIf="authService.loggedIn() && isOperator()" class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Buses <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/register']">Add Bus</a></li>
+            <li [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/viewuser']">View Buses</a></li>
+            <!-- <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li> -->
+          </ul>
+        </li>
+        <li *ngIf="authService.loggedIn() && isOperator()" class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Trips <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/register']">Add Trip</a></li>
+            <li [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/viewuser']">View Trips</a></li>
+            <!-- <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li> -->
+          </ul>
+        </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li *ngIf="authService.loggedIn() && !isAdmin()" [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/dashboard']">Dashboard</a></li>
+        <li *ngIf="authService.loggedIn()" [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/dashboard']">Dashboard</a></li>
         <li *ngIf="authService.loggedIn()" [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/profile']">Profile</a></li>
         <li *ngIf="!authService.loggedIn()" [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/login']">Login</a></li>
-        <li *ngIf="!authService.loggedIn()" [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/register']">Register</a></li>
         <li *ngIf="authService.loggedIn()"><a (click)="onLogoutClick()" href = "#">Logout</a></li>
       </ul>
     </div><!--/.nav-collapse -->

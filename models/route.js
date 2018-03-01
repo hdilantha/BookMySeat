@@ -26,5 +26,9 @@ module.exports.getRouteByRouteId = function(route_id, callback) {
 }
 
 module.exports.addRoute = function(newRoute, callback) {
-    newRoute.save(callback);
+  newRoute.save(callback);
+}
+
+module.exports.getAllRoutes = function(callback) {
+    Route.find({}, callback);
 }

@@ -8,8 +8,8 @@ import { Router } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
+
 export class NavbarComponent implements OnInit {
-  type: any;
 
   constructor(private flashMessage: FlashMessagesService,
     private authService: AuthService,
@@ -26,10 +26,24 @@ export class NavbarComponent implements OnInit {
   }
 
   isAdmin() {
-    if(this.type == 'admin') {
-      return true;
-    } else {
-      return false;
+    try {
+      const user = localStorage.getItem('user');
+      if(JSON.parse(user).type == "Admin") {
+        return true;
+      }
+    } catch(e) {
+      return false
+    }
+  }
+
+  isOperator() {
+    try {
+      const user = localStorage.getItem('user');
+      if(JSON.parse(user).type == "Operator") {
+        return true;
+      }
+    } catch(e) {
+      return false
     }
   }
 }

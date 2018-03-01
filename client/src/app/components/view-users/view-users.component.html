@@ -1,0 +1,13 @@
+<h2 class="page-header">User Information</h2>
+<div class="container" style="padding-right: 70%">
+  <div *ngFor = "let user of users">
+    <div class="list-group">
+      <a href="#" class="list-group-item active">
+        <h4 class="list-group-item-heading">{{user.name}}</h4>
+        <p class="list-group-item-text">Type: {{user.type}}</p>
+        <p class="list-group-item-text">Telephone: {{user.telephone}}</p>
+        <p class="list-group-item-text">Email: {{user.email}}</p>
+      </a>
+    </div>
+  </div>
+</div>

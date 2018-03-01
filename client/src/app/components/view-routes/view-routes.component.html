@@ -1,0 +1,11 @@
+<h2 class="page-header">Route Information</h2>
+<div class="container" style="padding-right: 50%">
+<div *ngFor = "let route of routes">
+  <div class="list-group">
+    <a href="#" class="list-group-item active">
+      <h4 class="list-group-item-heading">Route ID: {{route.route_id}}</h4>
+      <p class="list-group-item-text">Cities: {{route.cities}}</p>
+    </a>
+  </div>
+</div>
+</div>

@@ -7,6 +7,7 @@ const Route = require('../models/route');
 
 // Register
 router.post('/register', (req, res, next) => {
+    console.log(req.body);
     let newRoute = new Route({
         route_id: req.body.route_id,
         cities: req.body.cities
@@ -18,6 +19,12 @@ router.post('/register', (req, res, next) => {
         } else {
             res.json({success: true, msg:'Route registered'});
         }
+    });
+});
+
+router.get('/allroutes', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+    Route.getAllRoutes((err,resp)  => {
+      res.json({routes: resp});
     });
 });
 

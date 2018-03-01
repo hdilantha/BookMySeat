@@ -8,6 +8,7 @@ const User = require('../models/user');
 
 // Register
 router.post('/register', (req, res, next) => {
+    const chkemail = req.body.email;
     let newUser = new User({
         name: req.body.name,
         password: req.body.password,
@@ -15,22 +16,28 @@ router.post('/register', (req, res, next) => {
         telephone: req.body.telephone,
         email: req.body.email
     });
-
-    User.addUser(newUser, (err, user) => {
-        if(err) {
-            res.json({success: false, msg:'Failed to register user'});
+    User.getUserByEmail(chkemail, (err, user) => {
+        if(err) throw err;
+        if(user) {
+            res.json({success: false, msg: 'Email already exists'});
         } else {
-            res.json({success: true, msg:'User registered'});
+            User.addUser(newUser, (err, user) => {
+                if(err) {
+                    res.json({success: false, msg:'Failed to register user'});
+                } else {
+                    res.json({success: true, msg:'User registered'});
+                }
+            });
         }
     });
 });
 
 // Authenticate
 router.post('/authenticate', (req, res, next) => {
-    const username = req.body.username;
+    const email = req.body.email;
     const password = req.body.password;
 
-    User.getUserByUserName(username, function(err, user) {
+    User.getUserByEmail(email, function(err, user) {
         if(err) throw err;
         if(!user) {
             return res.json({success: false, msg: 'User not found'});
@@ -65,5 +72,12 @@ router.post('/authenticate', (req, res, next) => {
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
     res.json({user: req.user});
 });
+
+router.get('/allusers', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+    User.getAllUsers((err,resp)  => {
+      res.json({users: resp});
+    });
+});
+
 
 module.exports = router;

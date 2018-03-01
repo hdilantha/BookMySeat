@@ -29,8 +29,17 @@ module.exports.getUserById = function(id, callback) {
     User.findById(id, callback);
 }
 
+module.exports.getAllUsers = function(callback) {
+    User.find({}, callback);
+}
+
 module.exports.getUserByUserName = function(username, callback) {
     const query = {name: username}
+    User.findOne(query, callback);
+}
+
+module.exports.getUserByEmail = function(email, callback) {
+    const query = {email: email}
     User.findOne(query, callback);
 }
 

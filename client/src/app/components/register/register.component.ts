@@ -44,13 +44,23 @@ export class RegisterComponent implements OnInit {
       return false;
     }
 
+    if(!this.validateService.validateTelephone(user.telephone)) {
+      this.flashMessage.show('Please enter valid telephone number', {cssClass: 'alert-danger', timeout: 3000});
+      return false;
+    }
+
+    if(!this.validateService.validateType(user.type)) {
+      this.flashMessage.show('Please enter valid user type (Ex: \'Admin\' or \'Operator\')', {cssClass: 'alert-danger', timeout: 3000});
+      return false;
+    }
+
     // Register user
     this.authService.registerUser(user).subscribe(data => {
       if(data.success) {
-        this.flashMessage.show('You are successfully registered', {cssClass: 'alert-success', timeout: 4000});
-        this.router.navigate(['/login']);
+        this.flashMessage.show('User registered successfully', {cssClass: 'alert-success', timeout: 4000});
+        this.router.navigate(['/register']);
       } else {
-        this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
         this.router.navigate(['/register']);
       }
     });
