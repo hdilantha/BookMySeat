@@ -1,0 +1,19 @@
+<div class="container" style="padding-right: 70%">
+  <h2 class = "page-header">Edit</h2>
+  <form (submit) = "onEditSubmit()">
+    <div class="form-group disable">
+      <label>Name</label>
+      <input type="text" [(ngModel)] = "name" name = "name" class="form-control">
+    </div>
+    <div class="form-group">
+      <label>Telephone</label>
+      <input type="text" [(ngModel)] = "telephone" name = "telephone" class="form-control">
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" [(ngModel)] = "email" name = "email" class="form-control" disabled="true">
+    </div>
+    <input type="submit" class="btn btn-primary" value="Save">
+  </form>
+</div>
+<br>

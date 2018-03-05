@@ -4,7 +4,6 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 import { RouteService } from '../../services/route.service';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-add-route',
   templateUrl: './add-route.component.html',
@@ -28,7 +27,7 @@ export class AddRouteComponent implements OnInit {
       route_id: this.route_id,
       cities: this.cities
     }
-    
+
     // Required Fields
     if(!this.validateService.validateRoute(route)) {
       this.flashMessage.show('Please fill all fields', {cssClass: 'alert-danger', timeout: 3000});

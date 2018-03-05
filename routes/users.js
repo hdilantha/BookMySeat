@@ -32,6 +32,22 @@ router.post('/register', (req, res, next) => {
     });
 });
 
+// Edit
+router.post('/edit', (req, res, next) => {
+    let newUser = new User({
+        name: req.body.name,
+        telephone: req.body.telephone,
+        email: req.body.email
+    });
+    User.editUser(newUser, (err, user) => {
+        if(err) {
+            res.json({success: false, msg:'Failed to save new details'});
+        } else {
+            res.json({success: true, msg:'User edited successfully'});
+        }
+    });
+});
+
 // Authenticate
 router.post('/authenticate', (req, res, next) => {
     const email = req.body.email;

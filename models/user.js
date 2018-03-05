@@ -53,6 +53,15 @@ module.exports.addUser = function(newUser, callback) {
     });
 }
 
+module.exports.editUser = function(newUser, callback) {
+  const query = {email: newUser.email};
+  const values = {name: newUser.name, telephone: newUser.telephone};
+  User.update(query, values, (err, values) => {
+    if (err) throw err;
+    callback(null, values);
+  });
+}
+
 module.exports.comparePassword = function(candidatepassword, hash, callback) {
     bcrypt.compare(candidatepassword, hash, function(err, isMatch) {
         if(err) throw err;

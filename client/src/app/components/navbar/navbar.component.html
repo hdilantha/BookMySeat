@@ -34,17 +34,17 @@
         <li *ngIf="authService.loggedIn() && isOperator()" class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Buses <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/register']">Add Bus</a></li>
-            <li [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/viewuser']">View Buses</a></li>
+            <li [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/addbus']">Add Bus</a></li>
+            <li [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/viewbus']">View Buses</a></li>
             <!-- <li role="separator" class="divider"></li>
             <li><a href="#">Separated link</a></li> -->
           </ul>
         </li>
         <li *ngIf="authService.loggedIn() && isOperator()" class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Trips <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Turns <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/register']">Add Trip</a></li>
-            <li [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/viewuser']">View Trips</a></li>
+            <li [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/addturn']">Add Turn</a></li>
+            <li [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink] = "['/viewturn']">View Turns</a></li>
             <!-- <li role="separator" class="divider"></li>
             <li><a href="#">Separated link</a></li> -->
           </ul>

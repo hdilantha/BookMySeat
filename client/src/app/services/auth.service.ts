@@ -18,6 +18,14 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  // Edit User
+  editUser(user) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/users/edit', user, {headers: headers})
+      .map(res => res.json());
+  }
+
   // Login Authenticate
   authenticateUser(user) {
     let headers = new Headers();

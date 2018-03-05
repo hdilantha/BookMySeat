@@ -3,37 +3,40 @@ import { ValidateService } from '../../services/validate.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: 'app-edit-user',
+  templateUrl: './edit-user.component.html',
+  styleUrls: ['./edit-user.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class EditUserComponent implements OnInit {
   name: String;
   type: String;
   telephone: String;
   email: String;
-  password: String;
+
   constructor(private validateService: ValidateService,
     private flashMessage: FlashMessagesService,
     private authService: AuthService,
-    private router: Router) { }
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.name = this.route.snapshot.queryParams['name'];
+    this.telephone = this.route.snapshot.queryParams['telephone'];
+    this.email = this.route.snapshot.queryParams['email'];
   }
 
-  onRegisterSubmit() {
+  onEditSubmit() {
     const user = {
       name: this.name,
-      type: this.type,
       telephone: this.telephone,
-      email: this.email,
-      password: this.password
+      email: this.email
     }
 
     // Required Fields
-    if(!this.validateService.validateRegister(user)) {
+    if(!this.validateService.validateEdit(user)) {
       this.flashMessage.show('Please fill all fields', {cssClass: 'alert-danger', timeout: 3000});
       return false;
     }
@@ -50,14 +53,14 @@ export class RegisterComponent implements OnInit {
       return false;
     }
 
-    // Register User
-    this.authService.registerUser(user).subscribe(data => {
+    // Edit User
+    this.authService.editUser(user).subscribe(data => {
       if(data.success) {
-        this.flashMessage.show('User registered successfully', {cssClass: 'alert-success', timeout: 4000});
-        this.router.navigate(['/register']);
+        this.flashMessage.show('User edited successfully', {cssClass: 'alert-success', timeout: 3000});
+        this.router.navigate(['/profile']);
       } else {
         this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
-        this.router.navigate(['/register']);
+        this.router.navigate(['/profile']);
       }
     });
   }

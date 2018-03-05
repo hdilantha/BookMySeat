@@ -1,0 +1,11 @@
+<h2 class="page-header">Active Buses Information</h2>
+<div class="container" style="padding-right: 50%">
+<div *ngFor = "let bus of buses">
+  <div class="list-group">
+    <a href="#" class="list-group-item active">
+      <h4 class="list-group-item-heading">License plate: {{bus.license}}</h4>
+      <p class="list-group-item-text">Seat type: {{bus.type}}</p>
+    </a>
+  </div>
+</div>
+</div>

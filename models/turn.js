@@ -8,7 +8,7 @@ const TurnSchema = mongoose.Schema({
         type: String,
         required:true
     },
-    license_plate: {
+    license: {
         type: String,
         required:true
     },
@@ -16,16 +16,24 @@ const TurnSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    email: {
+        type: String,
+        required: true
+    },
     seats: {
         type: Array,
         required:true
     },
-    times: {
-        type: Array,
+    time: {
+        type: String,
         required: true
     },
     date: {
         type: Date,
+        required:true
+    },
+    status: {
+        type: String,
         required:true
     }
 });
@@ -41,6 +49,15 @@ module.exports.getTurnByTurnId = function(turn_id, callback) {
     Turn.findOne(query, callback);
 }
 
+module.exports.getTurnByTurnId = function(turn_id, callback) {
+    const query = {turn_id: turn_id}
+    Turn.findOne(query, callback);
+}
+
 module.exports.addTurn = function(newTurn, callback) {
     newTurn.save(callback);
+}
+
+module.exports.getAllTurns = function(email, callback) {
+    Turn.find({email: email, status: 'active'}, callback);
 }

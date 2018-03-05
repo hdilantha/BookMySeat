@@ -7,17 +7,22 @@ const Route = require('../models/route');
 
 // Register
 router.post('/register', (req, res, next) => {
-    console.log(req.body);
     let newRoute = new Route({
         route_id: req.body.route_id,
-        cities: req.body.cities
+        cities: req.body.cities.split(" ")
     });
-
-    Route.addRoute(newRoute, (err, bus) => {
-        if(err) {
-            res.json({success: false, msg:'Failed to register route'});
+    Route.getRouteByRouteId(req.body.route_id, (err, route) => {
+        if(err) throw err;
+        if(route) {
+            res.json({success: false, msg: 'Route already exists'});
         } else {
-            res.json({success: true, msg:'Route registered'});
+          Route.addRoute(newRoute, (err, bus) => {
+              if(err) {
+                  res.json({success: false, msg:'Failed to register route'});
+              } else {
+                  res.json({success: true, msg:'Route registered'});
+              }
+          });
         }
     });
 });

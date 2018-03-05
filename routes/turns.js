@@ -7,24 +7,37 @@ const Turn = require('../models/turn');
 
 // Register
 router.post('/register', (req, res, next) => {
+    const checkID = req.body.turn_id;
     let newTurn = new Turn({
         turn_id: req.body.turn_id,
-        license_plate: req.body.license_plate,
+        license: req.body.license,
         route_id: req.body.route_id,
-        seats: req.body.seats,
-        times: req.body.times,
-        date: req.body.date
+        email: req.body.email,
+        seats: req.body.seats.split(""),
+        time: req.body.time,
+        date: req.body.date,
+        status: "active"
     });
-
-    Turn.addTurn(newTurn, (err, bus) => {
-        if(err) {
-            res.json({success: false, msg:'Failed to register turn'});
+    Turn.getTurnByTurnId(checkID, (err, turn) => {
+        if(err) throw err;
+        if(turn) {
+            res.json({success: false, msg: 'Turn ID already exists'});
         } else {
-            res.json({success: true, msg:'Turn registered'});
+            Turn.addTurn(newTurn, (err, bus) => {
+                if(err) {
+                    res.json({success: false, msg:'Failed to register turn'});
+                } else {
+                    res.json({success: true, msg:'Turn registered'});
+                }
+            });
         }
     });
 });
 
-
+router.get('/allturns', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+    Turn.getAllTurns(req.user.email, (err,resp)  => {
+      res.json({turns: resp});
+    });
+});
 
 module.exports = router;

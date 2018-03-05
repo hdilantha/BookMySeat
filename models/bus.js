@@ -4,22 +4,15 @@ const config = require('../config/database');
 
 // User Schema
 const BusSchema = mongoose.Schema({
-    license_plate: {
+    license: {
         type: String,
         required:true
     },
-    username: {
-        type: String,
-        required:true
-    },
-    route_id: {
+    email: {
         type: String,
         required:true
     },
     type: {
-        type: String
-    },
-    seat_type: {
         type: String
     },
     status: {
@@ -28,17 +21,21 @@ const BusSchema = mongoose.Schema({
     }
 });
 
-const User = module.exports = mongoose.model('Bus', BusSchema);
+const Bus = module.exports = mongoose.model('Bus', BusSchema);
 
 module.exports.getBusById = function(id, callback) {
-    User.findById(id, callback);
+    Bus.findById(id, callback);
 }
 
-module.exports.getBusByLicensePlate = function(license_plate, callback) {
-    const query = {license_plate: license_plate}
-    User.findOne(query, callback);
+module.exports.getBusByLicensePlate = function(license, callback) {
+    const query = {license: license}
+    Bus.findOne(query, callback);
 }
 
 module.exports.addBus = function(newBus, callback) {
     newBus.save(callback);
+}
+
+module.exports.getAllBuses = function(email, callback) {
+    Bus.find({email: email, status: 'active'}, callback);
 }

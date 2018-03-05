@@ -7,21 +7,32 @@ const Bus = require('../models/bus');
 
 // Register
 router.post('/register', (req, res, next) => {
+    const chkLicense = req.body.license;
     let newBus = new Bus({
-        license_plate: req.body.license_plate,
-        username: req.body.username,
-        route_id: req.body.route_id,
+        license: req.body.license,
+        email: req.body.email,
         type: req.body.type,
-        seat_type: req.body.seat_type,
         status: req.body.status
     });
-
-    Bus.addBus(newBus, (err, bus) => {
-        if(err) {
-            res.json({success: false, msg:'Failed to register bus'});
+    Bus.getBusByLicensePlate(chkLicense, (err, bus) => {
+        if(err) throw err;
+        if(bus) {
+            res.json({success: false, msg: 'License plate already exists'});
         } else {
-            res.json({success: true, msg:'Bus registered'});
+            Bus.addBus(newBus, (err, bus) => {
+                if(err) {
+                    res.json({success: false, msg:'Failed to register bus'});
+                } else {
+                    res.json({success: true, msg:'Bus registered'});
+                }
+            });
         }
+    });
+});
+
+router.get('/allbuses', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+    Bus.getAllBuses(req.user.email, (err,resp)  => {
+      res.json({buses: resp});
     });
 });
 
