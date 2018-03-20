@@ -17,7 +17,8 @@ export class AddTurnComponent implements OnInit {
   turn_id: String;
   email: String;
   license: String;
-  route_id: String;
+  cities: String;
+  return: Boolean;
   time: String;
   date: String;
 
@@ -26,7 +27,9 @@ export class AddTurnComponent implements OnInit {
     private turnService: TurnService,
     private busService: BusService,
     private routeService: RouteService,
-    private router: Router) { }
+    private router: Router) {
+    this.return = false;
+  }
 
   ngOnInit() {
     this.busService.getAllBuses().subscribe(buses => {
@@ -50,21 +53,21 @@ export class AddTurnComponent implements OnInit {
     const turn = {
       turn_id: this.turn_id,
       license: this.license,
-      route_id: this.route_id,
+      cities: this.cities,
+      return: this.return,
       email: JSON.parse(localStorage.getItem('user')).email,
       time: this.time,
       date: this.date,
-      status: "active",
+      status: "inactive",
       seats: "0".repeat(50)
     }
-
     // Required Fields
     if(!this.validateService.validateTurn(turn)) {
       this.flashMessage.show('Please fill all fields', {cssClass: 'alert-danger', timeout: 3000});
       return false;
     }
 
-    // Register User
+    // Register Turn
     this.turnService.registerTurn(turn).subscribe(data => {
       if(data.success) {
         this.flashMessage.show('Turn added successfully', {cssClass: 'alert-success', timeout: 4000});
@@ -74,5 +77,20 @@ export class AddTurnComponent implements OnInit {
         this.router.navigate(['/addturn']);
       }
     });
+  }
+
+  getRoute(route_id) {
+    this.routes.forEach(route => {
+      console.log(route.route_id);
+      console.log(route_id);
+      if(JSON.stringify(route.route_id).match(route_id)) {
+        return route.cities;
+      }
+    });
+    return false;
+  }
+
+  len(arr: any[]) {
+    return arr.length;
   }
 }

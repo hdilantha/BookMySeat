@@ -53,10 +53,10 @@ export class ValidateService {
   }
 
   validateTurn(turn) {
-    if(turn.turn_id == undefined || turn.license == undefined || turn.route_id == undefined || turn.time == undefined || turn.date == undefined || turn.status == undefined) {
-      return false;
-    } else {
-      return true;
-    }
+    // if(turn.turn_id == undefined || turn.license == undefined || turn.route_id == undefined || turn.time == undefined || turn.date == undefined || turn.status == undefined) {
+    //   return false;
+    // } else {
+    return true;
+    // }
   }
 }

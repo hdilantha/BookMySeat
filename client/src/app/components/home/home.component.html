@@ -4,18 +4,18 @@
   <p class = "lead">Welcome to the most popular bus booking platform in Sri Lanka</p>
   <div class="row">
     <div class="col-md-4">
-      <input type="text" name="" class="form-control" value="" placeholder="Starting location">
+      <input type="text" name="" class="form-control" value="" placeholder="Starting location" [(ngModel)] = "starting" name = "starting">
     </div>
     <div class="col-md-4">
-      <input type="text" name="" class="form-control" value="" placeholder="Destination">
+      <input type="text" name="" class="form-control" value="" placeholder="Destination" [(ngModel)] = "destination" name = "destination">
     </div>
     <div class="col-md-4">
-      <input type="date" name="" class="form-control" value="" placeholder="Date">
+      <input type="date" name="" class="form-control" value="" placeholder="Date" [(ngModel)] = "date" name = "date">
     </div>
   </div>
   <br>
   <div>
-    <a class = "btn btn-primary" [routerLink] = "['/']">Search</a>
+    <button class = "btn btn-primary" (click)="onClickSearch()">Search</button>
   </div>
 </div>
 

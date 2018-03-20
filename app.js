@@ -10,6 +10,7 @@ mongoose.connect(config.database);
 
 mongoose.connection.on('connected', () => {
     console.log('Connected to database ' + config.database);
+    // expire turns
 });
 
 mongoose.connection.on('error', (err) => {

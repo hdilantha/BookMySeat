@@ -12,8 +12,12 @@ const TurnSchema = mongoose.Schema({
         type: String,
         required:true
     },
-    route_id: {
-        type: String,
+    cities: {
+        type: Array,
+        required: true
+    },
+    return: {
+        type: Boolean,
         required: true
     },
     email: {
@@ -29,7 +33,7 @@ const TurnSchema = mongoose.Schema({
         required: true
     },
     date: {
-        type: Date,
+        type: String,
         required:true
     },
     status: {
@@ -45,19 +49,27 @@ module.exports.getTurnById = function(id, callback) {
 }
 
 module.exports.getTurnByTurnId = function(turn_id, callback) {
-    const query = {turn_id: turn_id}
+    const query = {turn_id: turn_id, status: 'active'}
     Turn.findOne(query, callback);
 }
 
-module.exports.getTurnByTurnId = function(turn_id, callback) {
-    const query = {turn_id: turn_id}
-    Turn.findOne(query, callback);
+module.exports.getTurnByRotue = function(city1, city2, date, callback) {
+    const query = {cities: {$all: [city1, city2]}, date: date}
+    Turn.find(query, callback);
 }
 
 module.exports.addTurn = function(newTurn, callback) {
+    if (newTurn.return) {
+      newTurn.cities = newTurn.cities.reverse();
+    }
     newTurn.save(callback);
 }
 
 module.exports.getAllTurns = function(email, callback) {
-    Turn.find({email: email, status: 'active'}, callback);
+    Turn.find({email: email, status: {$ne: 'expired'}}, callback);
+}
+
+module.exports.setSeats = function(turn_id, newseats, callback) {
+    newseats = newseats.split(",");
+    Turn.findOneAndUpdate({turn_id: turn_id}, {$set: {seats: newseats}}, callback);
 }

@@ -36,4 +36,12 @@ export class ViewTurnsComponent implements OnInit {
   getDate(date) {
     return date.split("T")[0];
   }
+
+  isValid(status) {
+    if (status == 'inactive') {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

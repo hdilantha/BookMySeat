@@ -13,9 +13,13 @@
     </div>
     <div class="form-group">
       <label>Route</label>
-      <select class="form-control" [(ngModel)] = "route_id" name = "route_id" >
-        <option *ngFor = "let route of routes" value={{route.route_id}}>{{route.route_id}}</option>
+      <select class="form-control" [(ngModel)] = "cities" name = "cities" >
+        <option *ngFor = "let route of routes" value={{route.cities}}>{{route.route_id}} - {{route.cities[0]}} to {{route.cities[len(route.cities) - 1]}}</option>
       </select>
+    </div>
+    <div class="form-group">
+      <label>Return</label>
+      <input type="checkbox" [checked] = "return" (change) = "return = !return" />
     </div>
     <div class="form-group">
       <label>Time</label>

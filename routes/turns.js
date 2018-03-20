@@ -11,12 +11,13 @@ router.post('/register', (req, res, next) => {
     let newTurn = new Turn({
         turn_id: req.body.turn_id,
         license: req.body.license,
-        route_id: req.body.route_id,
+        cities: req.body.cities.split(","),
+        return: req.body.return,
         email: req.body.email,
         seats: req.body.seats.split(""),
         time: req.body.time,
         date: req.body.date,
-        status: "active"
+        status: req.body.status
     });
     Turn.getTurnByTurnId(checkID, (err, turn) => {
         if(err) throw err;
@@ -36,6 +37,28 @@ router.post('/register', (req, res, next) => {
 
 router.get('/allturns', passport.authenticate('jwt', {session:false}), (req, res, next) => {
     Turn.getAllTurns(req.user.email, (err,resp)  => {
+      res.json({turns: resp});
+    });
+});
+
+router.get('/getturn', (req, res, next) => {
+    Turn.getTurnByTurnId(req.query.turn_id, (err,resp)  => {
+      res.json(resp);
+    });
+});
+
+router.get('/markseats', (req, res, next) => {
+    Turn.setSeats(req.query.turn_id, req.query.seats, (err,resp)  => {
+      if(err) {
+          res.json({success: false, msg:'Failed to register turn'});
+      } else {
+          res.json({success: true, msg:'Turn registered'});
+      }
+    });
+});
+
+router.get('/searchturns', (req, res, next) => {
+    Turn.getTurnByRotue(req.query.starting, req.query.destination, req.query.date, (err,resp)  => {
       res.json({turns: resp});
     });
 });

@@ -18,6 +18,8 @@ import { AuthService } from './services/auth.service';
 import { RouteService } from './services/route.service';
 import { BusService } from './services/bus.service';
 import { TurnService } from './services/turn.service';
+import { ShareService } from './services/share.service';
+import { BookService } from './services/book.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ViewUsersComponent } from './components/view-users/view-users.component';
 import { AddRouteComponent } from './components/add-route/add-route.component';
@@ -27,6 +29,8 @@ import { AddBusComponent } from './components/add-bus/add-bus.component';
 import { ViewBusComponent } from './components/view-bus/view-bus.component';
 import { AddTurnComponent } from './components/add-turn/add-turn.component';
 import { ViewTurnsComponent } from './components/view-turns/view-turns.component';
+import { SearchResultsComponent } from './components/search-results/search-results.component';
+import { BookDetailsComponent } from './components/book-details/book-details.component';
 
 const appRoutes: Routes = [
   {path:'', component: HomeComponent},
@@ -41,7 +45,9 @@ const appRoutes: Routes = [
   {path:'addbus', component: AddBusComponent, canActivate: [AuthGuard]},
   {path:'viewbus', component: ViewBusComponent, canActivate: [AuthGuard]},
   {path:'addturn', component: AddTurnComponent, canActivate: [AuthGuard]},
-  {path:'viewturn', component: ViewTurnsComponent, canActivate: [AuthGuard]}
+  {path:'viewturn', component: ViewTurnsComponent, canActivate: [AuthGuard]},
+  {path:'searchresult', component: SearchResultsComponent},
+  {path:'bookdetail', component: BookDetailsComponent}
 ]
 
 @NgModule({
@@ -60,7 +66,9 @@ const appRoutes: Routes = [
     AddBusComponent,
     ViewBusComponent,
     AddTurnComponent,
-    ViewTurnsComponent
+    ViewTurnsComponent,
+    SearchResultsComponent,
+    BookDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +77,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule
   ],
-  providers: [ValidateService, AuthService, AuthGuard, RouteService, BusService, TurnService],
+  providers: [ValidateService, AuthService, AuthGuard, RouteService, BusService, TurnService, ShareService, BookService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

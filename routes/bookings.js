@@ -13,8 +13,7 @@ router.post('/register', (req, res, next) => {
         name: req.body.name,
         email: req.body.email,
         telephone: req.body.telephone,
-        seats: req.body.seats,
-        date: req.body.date
+        seats: req.body.seats.split(" ")
     });
 
     Booking.addBooking(newBooking, (err, bus) => {

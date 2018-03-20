@@ -1,0 +1,12 @@
+<div *ngIf = "!checkTurn()">
+  <h4> Sorry! Nothing to show</h4>
+  <br>
+  <h4> Try a different date</h4>
+</div>
+<div class="list-group">
+  <div class="list-group-item" *ngFor = "let turn of results">
+    <h4 class="list-group-item-heading">{{turn.turn_id}}</h4>
+    <p class="list-group-item-text">Route: {{turn.cities}}</p>
+    <button type="button" name="button" (click)="result(turn.turn_id)">Book</button>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { tokenNotExpired } from 'angular2-jwt';
+import { Http, RequestOptions, URLSearchParams, Headers } from '@angular/http';
 
 @Injectable()
 export class RouteService {

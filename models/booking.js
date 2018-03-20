@@ -26,10 +26,6 @@ const BookingSchema = mongoose.Schema({
     seats: {
         type: Array,
         required:true
-    },
-    date: {
-        type: Date,
-        required:true
     }
 });
 
