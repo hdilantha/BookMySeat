@@ -12,6 +12,7 @@ router.post('/register', (req, res, next) => {
         license: req.body.license,
         email: req.body.email,
         type: req.body.type,
+        owner: req.body.owner,
         status: req.body.status
     });
     Bus.getBusByLicensePlate(chkLicense, (err, bus) => {

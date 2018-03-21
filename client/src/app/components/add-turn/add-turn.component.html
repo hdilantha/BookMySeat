@@ -1,33 +1,47 @@
-<div class="container" style="padding-right: 70%">
+<div class="container">
   <h2 class = "page-header">Add Turn</h2>
   <form (submit) = "onAddTurnSubmit()">
-    <div class="form-group">
-      <label>Turn ID</label>
-      <input type="text" [(ngModel)] = "turn_id" name = "turn_id" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>Bus</label>
-      <select class="form-control" [(ngModel)] = "license" name = "license" >
-        <option *ngFor = "let bus of buses" value={{bus.license}}>{{bus.license}}</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>Route</label>
-      <select class="form-control" [(ngModel)] = "cities" name = "cities" >
-        <option *ngFor = "let route of routes" value={{route.cities}}>{{route.route_id}} - {{route.cities[0]}} to {{route.cities[len(route.cities) - 1]}}</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>Return</label>
-      <input type="checkbox" [checked] = "return" (change) = "return = !return" />
-    </div>
-    <div class="form-group">
-      <label>Time</label>
-      <input type="time" [(ngModel)] = "time" name = "time" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>Date</label>
-      <input type="date" [(ngModel)] = "date" name = "date" class="form-control">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Turn ID</label>
+          <input type="text" [(ngModel)] = "turn_id" name = "turn_id" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Bus</label>
+          <select class="form-control" [(ngModel)] = "license" name = "license" >
+            <option *ngFor = "let bus of buses" value={{bus.license}}>{{bus.license}} - {{bus.owner}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Route</label>
+          <select class="form-control" [(ngModel)] = "route_id" name = "route_id" >
+            <option *ngFor = "let route of routes" value={{route.route_id}}>{{route.route_id}} - {{route.cities[0]}} to {{route.cities[len(route.cities) - 1]}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Return</label>
+          <input type="checkbox" [checked] = "return" (change) = "return = !return" />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Starting Time</label>
+          <input type="time" [(ngModel)] = "stime" name = "stime" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Destination Time</label>
+          <input type="time" [(ngModel)] = "dtime" name = "dtime" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" [(ngModel)] = "date" name = "date" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Price (per Person)</label>
+          <input type="text" [(ngModel)] = "price" name = "price" class="form-control">
+        </div>
+      </div>
     </div>
     <br>
     <input type="submit" class="btn btn-primary" value="Add">

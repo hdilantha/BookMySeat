@@ -31,6 +31,11 @@ export class ValidateService {
     return re.test(String(telephone));
   }
 
+  validatePrice(price) {
+    const re = /^[0-9]{1,5}.[0-9]{2}$/;
+    return re.test(String(price));
+  }
+
   validateLicense(license) {
     const re = /^[A-Z]{2,3}-[0-9]{4}$/;
     return re.test(String(license));
@@ -38,6 +43,14 @@ export class ValidateService {
 
   validateRoute(route) {
     if(route.route_id == undefined || route.cities == undefined) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  validateBooking(booking) {
+    if(booking.name == undefined || booking.email == undefined || booking.telephone == undefined || booking.nic == undefined) {
       return false;
     } else {
       return true;
@@ -53,10 +66,16 @@ export class ValidateService {
   }
 
   validateTurn(turn) {
-    // if(turn.turn_id == undefined || turn.license == undefined || turn.route_id == undefined || turn.time == undefined || turn.date == undefined || turn.status == undefined) {
-    //   return false;
-    // } else {
+    if(turn.turn_id == undefined || turn.license == undefined || turn.route_id == undefined || turn.stime == undefined || turn.dtime == undefined || turn.date == undefined) {
+      console.log(turn.turn_id);
+      console.log(turn.license);
+      console.log(turn.route_id);
+      console.log(turn.stime);
+      console.log(turn.dtime);
+      console.log(turn.date);
+      return false;
+    } else {
     return true;
-    // }
+    }
   }
 }

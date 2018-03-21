@@ -11,12 +11,15 @@ router.post('/register', (req, res, next) => {
     let newTurn = new Turn({
         turn_id: req.body.turn_id,
         license: req.body.license,
-        cities: req.body.cities.split(","),
+        route_id: req.body.route_id,
+        cities: req.body.cities,
         return: req.body.return,
         email: req.body.email,
         seats: req.body.seats.split(""),
-        time: req.body.time,
+        stime: req.body.stime,
+        dtime: req.body.dtime,
         date: req.body.date,
+        price: req.body.price,
         status: req.body.status
     });
     Turn.getTurnByTurnId(checkID, (err, turn) => {

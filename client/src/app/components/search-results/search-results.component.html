@@ -3,10 +3,31 @@
   <br>
   <h4> Try a different date</h4>
 </div>
-<div class="list-group">
-  <div class="list-group-item" *ngFor = "let turn of results">
-    <h4 class="list-group-item-heading">{{turn.turn_id}}</h4>
-    <p class="list-group-item-text">Route: {{turn.cities}}</p>
-    <button type="button" name="button" (click)="result(turn.turn_id)">Book</button>
+<div *ngFor = "let turn of results">
+  <div class="panel panel-default">
+    <div class="panel-heading">  </div>
+    <div class="row" style="padding:15px">
+      <div class="col-md-3">
+        <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-object-align-right" aria-hidden="true"></span>  Bus: {{turn.license}}</h4>
+        <p class="list-group-item-text">Route No: {{turn.route_id}}</p>
+        <p class="list-group-item-text">{{turn.cities[0]}} - {{turn.cities[len(turn.cities)]}}</p>
+      </div>
+      <div class="col-md-3">
+        <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-export" aria-hidden="true"></span> {{turn.cities[0]}}</h4>
+        <p class="list-group-item-text">{{turn.stime}} AM</p>
+        <p class="list-group-item-text">{{turn.date}}</p>
+      </div>
+      <div class="col-md-3">
+        <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-import" aria-hidden="true"></span> {{turn.cities[len(turn.cities)]}}</h4>
+        <p class="list-group-item-text">{{turn.dtime}} PM</p>
+        <p class="list-group-item-text">{{turn.date}}</p>
+      </div>
+      <div class="col-md-3">
+        <h4 class="list-group-item-heading">Rs {{turn.price}} / Person</h4>
+        <p class="list-group-item-text">Seats left: {{seatsLeft(turn.seats)}}</p>
+        <br>
+        <button class="btn btn-default" type="button" name="button" (click) = "result(turn.turn_id)">Book</button>
+      </div>
+    </div>
   </div>
 </div>

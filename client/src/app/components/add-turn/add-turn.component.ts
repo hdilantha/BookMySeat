@@ -17,10 +17,13 @@ export class AddTurnComponent implements OnInit {
   turn_id: String;
   email: String;
   license: String;
+  route_id: String;
   cities: String;
   return: Boolean;
-  time: String;
+  stime: String;
+  dtime: String
   date: String;
+  price: String;
 
   constructor(private validateService: ValidateService,
     private flashMessage: FlashMessagesService,
@@ -50,20 +53,30 @@ export class AddTurnComponent implements OnInit {
   }
 
   onAddTurnSubmit() {
+    this.getCities(this.route_id);
     const turn = {
       turn_id: this.turn_id,
       license: this.license,
+      route_id: this.route_id,
       cities: this.cities,
       return: this.return,
       email: JSON.parse(localStorage.getItem('user')).email,
-      time: this.time,
+      stime: this.stime,
+      dtime: this.dtime,
       date: this.date,
-      status: "inactive",
-      seats: "0".repeat(50)
+      price: this.price,
+      status: "active",
+      seats: "0".repeat(49)
     }
     // Required Fields
     if(!this.validateService.validateTurn(turn)) {
       this.flashMessage.show('Please fill all fields', {cssClass: 'alert-danger', timeout: 3000});
+      return false;
+    }
+
+    // Validate Price
+    if(!this.validateService.validatePrice(this.price)) {
+      this.flashMessage.show('Please enter a valid price', {cssClass: 'alert-danger', timeout: 3000});
       return false;
     }
 
@@ -79,15 +92,12 @@ export class AddTurnComponent implements OnInit {
     });
   }
 
-  getRoute(route_id) {
+  getCities(route_id) {
     this.routes.forEach(route => {
-      console.log(route.route_id);
-      console.log(route_id);
-      if(JSON.stringify(route.route_id).match(route_id)) {
-        return route.cities;
+      if(route.route_id === route_id) {
+        this.cities = route.cities;
       }
     });
-    return false;
   }
 
   len(arr: any[]) {

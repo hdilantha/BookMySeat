@@ -26,6 +26,10 @@ export class SearchResultsComponent implements OnInit {
     });
   }
 
+  len(arr: any[]) {
+    return arr.length - 1;
+  }
+
   loadTurns(callback: () => void) {
     this.turnService.getSearchResults(localStorage.getItem('starting'), localStorage.getItem('destination'), localStorage.getItem('date')).subscribe(turns => {
       this.turns = turns.turns;
@@ -43,6 +47,16 @@ export class SearchResultsComponent implements OnInit {
 
   checkTurn() {
     return this.results.length;
+  }
+
+  seatsLeft(seats) {
+    var count = 0
+    for (var seat of seats) {
+      if (seat == "0") {
+        count = count + 1;
+      }
+    }
+    return count - 1;
   }
 
   checkCities(cities, city1, city2){

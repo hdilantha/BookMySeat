@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class AddBusComponent implements OnInit {
   user: any;
   license: String;
+  owner: String;
   type: String;
 
   constructor(private validateService: ValidateService,
@@ -29,6 +30,7 @@ export class AddBusComponent implements OnInit {
       license: this.license,
       email: JSON.parse(this.user).email,
       type: this.type,
+      owner: this.owner,
       status: 'active'
     }
 
@@ -38,13 +40,13 @@ export class AddBusComponent implements OnInit {
       return false;
     }
 
-    // // Required Fields
+    // Validate License
     if(!this.validateService.validateLicense(this.license)) {
       this.flashMessage.show('Please enter a valid license plate', {cssClass: 'alert-danger', timeout: 3000});
       return false;
     }
 
-    // Register route
+    // Register Bus
     this.busService.registerBus(bus).subscribe(data => {
       if(data.success) {
         this.flashMessage.show('Bus added successfully', {cssClass: 'alert-success', timeout: 4000});

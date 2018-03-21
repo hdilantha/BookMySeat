@@ -13,6 +13,7 @@ router.post('/register', (req, res, next) => {
         name: req.body.name,
         email: req.body.email,
         telephone: req.body.telephone,
+        nic: req.body.nic,
         seats: req.body.seats.split(" ")
     });
 

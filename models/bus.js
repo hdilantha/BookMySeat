@@ -13,7 +13,11 @@ const BusSchema = mongoose.Schema({
         required:true
     },
     type: {
-        type: String
+        type: String,
+        required:true
+    },
+    owner: {
+        type: String,
     },
     status: {
         type: String,

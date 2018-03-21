@@ -12,6 +12,10 @@ const TurnSchema = mongoose.Schema({
         type: String,
         required:true
     },
+    route_id: {
+        type: String,
+        required:true
+    },
     cities: {
         type: Array,
         required: true
@@ -28,11 +32,19 @@ const TurnSchema = mongoose.Schema({
         type: Array,
         required:true
     },
-    time: {
+    stime: {
+        type: String,
+        required: true
+    },
+    dtime: {
         type: String,
         required: true
     },
     date: {
+        type: String,
+        required:true
+    },
+    price: {
         type: String,
         required:true
     },

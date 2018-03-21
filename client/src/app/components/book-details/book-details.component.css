@@ -1,1 +1,6 @@
 .big-checkbox  > input {width: 25px; height: 25px;}
+.big-checkbox-hidden  > input {width: 25px; height: 25px; opacity:0;}
+
+input[type="checkbox"] { /* change "blue" browser chrome to yellow */
+  filter: invert(100%) hue-rotate(18deg) brightness(1.7);
+}

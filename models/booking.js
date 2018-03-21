@@ -23,6 +23,10 @@ const BookingSchema = mongoose.Schema({
         type: String,
         required:true
     },
+    nic: {
+        type: String,
+        required:true
+    },
     seats: {
         type: Array,
         required:true
