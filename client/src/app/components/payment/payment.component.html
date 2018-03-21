@@ -1,0 +1,134 @@
+<div *ngIf="flag">
+<h2 class = "page-header">Payments</h2>
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">Passenger Details</div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <p class="list-group-item-text pull-left">Name: </p>
+          <p class="list-group-item-text pull-right">{{name}}</p>
+          <br>
+        </li>
+        <li class="list-group-item">
+          <p class="list-group-item-text pull-left">Telephone: </p>
+          <p class="list-group-item-text pull-right">{{telephone}}</p>
+          <br>
+        </li>
+        <li class="list-group-item">
+          <p class="list-group-item-text pull-left">NIC: </p>
+          <p class="list-group-item-text pull-right">{{nic}}</p>
+          <br>
+        </li>
+        <li class="list-group-item">
+          <p class="list-group-item-text pull-left">Email: </p>
+          <p class="list-group-item-text pull-right">{{email}}</p>
+          <br>
+        </li>
+      </ul>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">Journey Summary</div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <p class="list-group-item-text pull-left">from</p>
+          <p class="list-group-item-text pull-right">to</p>
+          <br>
+          <p class="list-group-item-text pull-left">{{starting}} <span class="glyphicon glyphicon-export" aria-hidden="true"></span></p>
+          <p class="list-group-item-text pull-right"><span class="glyphicon glyphicon-import" aria-hidden="true"></span> {{destination}}</p>
+          <br>
+        </li>
+        <li class="list-group-item">
+          <p class="list-group-item-text pull-left">Date: </p>
+          <p class="list-group-item-text pull-right">{{date}}</p>
+          <br>
+        </li>
+        <li class="list-group-item">
+          <p class="list-group-item-text pull-left">Time: </p>
+          <p class="list-group-item-text pull-right">{{analogToDigital(stime)}}</p>
+          <br>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-4">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Payment</div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <p class="list-group-item-text pull-left">Onward Fare: </p>
+          <p class="list-group-item-text pull-right">Rs. {{func(tprice)}}</p>
+          <br>
+        </li>
+        <li class="list-group-item">
+          <p class="list-group-item-text pull-left">Booking Charges: </p>
+          <p class="list-group-item-text pull-right">Rs. {{func(bcharge)}}</p>
+          <br>
+        </li>
+        <li class="list-group-item">
+          <p class="list-group-item-text pull-left">Taxes: </p>
+          <p class="list-group-item-text pull-right">Rs. 0.00</p>
+          <br>
+        </li>
+      </ul>
+      <div class="panel-heading">
+        <p class="list-group-item-text pull-left">Total Payable: </p>
+      <p class="list-group-item-text pull-right">Rs. {{func(total)}}</p>
+      <br></div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">Payment Method</div>
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#1" aria-controls="1" role="tab" data-toggle="tab">Credit/Debit Cards</a></li>
+        <li role="presentation"><a href="#2" aria-controls="2" role="tab" data-toggle="tab">PayPal</a></li>
+        <li role="presentation"><a href="#3" aria-controls="3" role="tab" data-toggle="tab">eZcash</a></li>
+      </ul>
+    </div>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="1">
+        <div class="panel panel-default">
+        <br>
+        <form (submit) = "onClickNext()">
+          <div class="form-group" style="padding-left: 15px; padding-right: 15px; padding-up: 10px">
+            <label>Name on card: </label> <input type="text" class="pull-right">
+          </div>
+          <div class="form-group" style="padding-left: 15px; padding-right: 15px" >
+            <label>Card Number: </label> <input type="text" class="pull-right">
+          </div>
+          <div class="form-group" style="padding-left: 15px; padding-right: 15px">
+            <label>CVV: </label> <input type="text" class="pull-right">
+          </div>
+          <div class="form-group" style="padding-left: 15px; padding-right: 15px">
+            <label>Expiry (MM/YY): </label> <input type="text" class="pull-right">
+          </div>
+          <div class="form-group" style="padding-left: 15px; padding-right: 15px">
+            <label>Amount: {{func(total)}} </label>
+          </div>
+        </form>
+      </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="2"></div>
+      <div role="tabpanel" class="tab-pane" id="3">
+        <div class="panel panel-default">
+            <br>
+            <div class="panel panel-primary" style="padding-left: 15px; padding-right: 15px">
+              <div class="panel-heading">Dialog</div>
+            </div>
+            <div class="panel panel-success" style="padding-left: 15px; padding-right: 15px">
+              <div class="panel-heading">Etisalat</div>
+            </div>
+            <div class="panel panel-danger" style="padding-left: 15px; padding-right: 15px">
+              <div class="panel-heading">Hutch</div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <button type="button" name="button" class="btn btn-primary" (click)="onClickPay()">Pay Now</button>
+  </div>
+
+
+</div>
+</div>

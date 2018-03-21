@@ -21,6 +21,9 @@ export class SearchResultsComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (localStorage.getItem('starting') === null) {
+      this.router.navigate(['/']);
+    }
     this.loadTurns(() => {
       this.loadResults();
     });
@@ -45,6 +48,20 @@ export class SearchResultsComponent implements OnInit {
     });
   }
 
+  analogToDigital(time: String) {
+    var arr = time.split(":");
+    if (+arr[0] > 11) {
+      var res = (+arr[0] - 12).toString() + ":" + arr[1] + " PM";
+      return res;
+    } else if (arr[0] == "00") {
+      var res = 12 + ":" + arr[1] + " AM";
+      return res;
+    } else {
+      var res = time + " AM";
+      return res;
+    }
+  }
+  
   checkTurn() {
     return this.results.length;
   }
@@ -74,10 +91,7 @@ export class SearchResultsComponent implements OnInit {
   }
 
   result(turn_id) {
-    this.turnService.getTurn(turn_id).subscribe(turn => {
-      localStorage.setItem('turn_id', turn_id);
-      localStorage.setItem('seats', turn.seats);
-      this.router.navigate(['/bookdetail']);
-    });
+    localStorage.setItem('turn_id', turn_id);
+    this.router.navigate(['/bookdetail']);
   }
 }

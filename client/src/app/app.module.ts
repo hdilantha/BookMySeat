@@ -31,6 +31,7 @@ import { AddTurnComponent } from './components/add-turn/add-turn.component';
 import { ViewTurnsComponent } from './components/view-turns/view-turns.component';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
+import { PaymentComponent } from './components/payment/payment.component';
 
 const appRoutes: Routes = [
   {path:'', component: HomeComponent},
@@ -47,7 +48,8 @@ const appRoutes: Routes = [
   {path:'addturn', component: AddTurnComponent, canActivate: [AuthGuard]},
   {path:'viewturn', component: ViewTurnsComponent, canActivate: [AuthGuard]},
   {path:'searchresult', component: SearchResultsComponent},
-  {path:'bookdetail', component: BookDetailsComponent}
+  {path:'bookdetail', component: BookDetailsComponent},
+  {path:'payment', component: PaymentComponent}
 ]
 
 @NgModule({
@@ -68,7 +70,8 @@ const appRoutes: Routes = [
     AddTurnComponent,
     ViewTurnsComponent,
     SearchResultsComponent,
-    BookDetailsComponent
+    BookDetailsComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,

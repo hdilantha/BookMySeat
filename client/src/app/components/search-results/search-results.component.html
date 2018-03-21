@@ -1,7 +1,6 @@
 <div *ngIf = "!checkTurn()">
-  <h4> Sorry! Nothing to show</h4>
+  <h4 class="list-group-item-heading"> Sorry! Nothing to show. Please Refine your search. <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></h4>
   <br>
-  <h4> Try a different date</h4>
 </div>
 <div *ngFor = "let turn of results">
   <div class="panel panel-default">
@@ -14,12 +13,12 @@
       </div>
       <div class="col-md-3">
         <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-export" aria-hidden="true"></span> {{turn.cities[0]}}</h4>
-        <p class="list-group-item-text">{{turn.stime}} AM</p>
+        <p class="list-group-item-text">{{analogToDigital(turn.stime)}}</p>
         <p class="list-group-item-text">{{turn.date}}</p>
       </div>
       <div class="col-md-3">
         <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-import" aria-hidden="true"></span> {{turn.cities[len(turn.cities)]}}</h4>
-        <p class="list-group-item-text">{{turn.dtime}} PM</p>
+        <p class="list-group-item-text">{{analogToDigital(turn.dtime)}}</p>
         <p class="list-group-item-text">{{turn.date}}</p>
       </div>
       <div class="col-md-3">

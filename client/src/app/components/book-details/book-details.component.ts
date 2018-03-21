@@ -12,14 +12,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./book-details.component.css']
 })
 export class BookDetailsComponent implements OnInit {
-  name: String;
-  telephone: String;
-  email: String;
-  nic: String;
+  name: string;
+  telephone: string;
+  email: string;
+  nic: string;
   turnseats: any;
-  seats: String;
+  seats: string;
   cseats: any;
   flag: boolean;
+  price: string;
+  stime: string;
 
   constructor(private turnService: TurnService,
     private shareService: ShareService,
@@ -31,12 +33,14 @@ export class BookDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.flag = false;
+    if (localStorage.getItem('turn_id') === null) {
+      this.router.navigate(['/']);
+    }
     this.turnService.getTurn(localStorage.getItem('turn_id')).subscribe(turn => {
       this.turnseats = turn.seats;
-      // this.cseats = [[[1,2],[],[3,4]],[[5,6],[],[7,8]],[[9,10],[],[11,12]],[[13,14],[],[15,16]],[[17,18],[],[19,20]],[[21,22],[],[23,24]],[[25,26],[],[27,28]],[[29,30],[],[31,32]],[[33,34],[],[35,36]],[[37,38],[],[39,40]],[[41,42],[],[43,44]],[[45,46],[],[47,48]],[[49,50],[51,52],[53,54]]];
-      // this.cseats = [[[1],[5],[9],[13],[17],[21],[25],[29],[33],[37],[41],[45],[49]],[[2],[6],[10],[14],[18],[22],[26],[30],[34],[38],[42],[26],[50]],[[],[],[],[],[],[],[],[],[],[],[],[],[51]],[[],[],[],[],[],[],[],[],[],[],[],[],[52]],[[3],[7],[11],[15],[19],[23],[27],[31],[35],[39],[43],[47],[53]],[[4],[8],[12],[16],[20],[24],[28],[32],[36],[40],[44],[48],[54]]];
+      this.price = turn.price;
+      this.stime = turn.stime;
       this.cseats =[[[1],[5],[9],[13],[17],[21],[25],[29],[33],[37],[41],[43]],[[2],[6],[10],[14],[18],[22],[26],[30],[34],[38],[42],[44]],[[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[45]],[[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[46]],[[3],[7],[11],[15],[19],[23],[27],[31],[35],[39],[0],[47]],[[4],[8],[12],[16],[20],[24],[28],[32],[36],[40],[0],[48]]];
-      // this.cseats =[[[49],[45],[41],[37],[33],[29],[25],[21],[17],[13],[9],[5],[1]],[[50],[46],[42],[38],[34],[30],[26],[22],[18],[14],[10],[6],[2]],[[51],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0]],[[52],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0],[0]],[[53],[47],[43],[39],[35],[31],[27],[23],[19],[15],[11],[7],[3]],[[54],[48],[44],[40],[36],[32],[28],[24],[20],[16],[12],[8],[4]]];
       this.flag = true;
     });
   }
@@ -80,17 +84,7 @@ export class BookDetailsComponent implements OnInit {
     return seats.split(" ").join("") + this.nic;
   }
 
-  markSeats(seats, bseats, b_id) {
-    bseats = bseats.split(" ");
-    bseats.forEach(n => {
-      seats[+n] = b_id;
-    });
-    return seats;
-  }
-
   onClickNext() {
-    var seats: any[];
-
     const booking = {
       booking_id: "b1",
       turn_id: localStorage.getItem('turn_id'),
@@ -125,30 +119,15 @@ export class BookDetailsComponent implements OnInit {
       return false;
     }
 
-    // Mark Seats
-    this.turnService.getTurn(localStorage.getItem('turn_id')).subscribe(turn => {
-      seats = turn.seats;
-      seats = this.markSeats(seats, this.seats, this.nic);
-      this.turnService.markSeats(localStorage.getItem('turn_id'), seats).subscribe(data => {
-        if(data.success) {
-          // Register Booking
-          this.bookService.registerBooking(booking).subscribe(data => {
-            if(data.success) {
-              this.flashMessage.show('Booking successful', {cssClass: 'alert-success', timeout: 4000});
-              // this.router.navigate(['/addturn']);
-            } else {
-              this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
-              // this.router.navigate(['/addturn']);
-            }
-          });
-        } else {
-          this.flashMessage.show('Selected seats were just got booked', {cssClass: 'alert-danger', timeout: 3000});
-        }
-      });
-    });
-  }
+    // Passing data to Payments
+    localStorage.setItem('name', this.name);
+    localStorage.setItem('email', this.email);
+    localStorage.setItem('telephone', this.telephone);
+    localStorage.setItem('nic', this.nic);
+    localStorage.setItem('seats', this.seats);
+    localStorage.setItem('price', this.price);
+    localStorage.setItem('stime', this.stime);
 
-  result() {
-    console.log(localStorage.getItem('turn_id'));
+    this.router.navigate(['/payment']);
   }
 }
