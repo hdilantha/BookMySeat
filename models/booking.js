@@ -44,6 +44,11 @@ module.exports.getBookingByBookingId = function(booking_id, callback) {
     Booking.findOne(query, callback);
 }
 
+module.exports.getBookingsByTurnId = function(turn_id, callback) {
+    const query = {turn_id: turn_id}
+    Booking.find(query, callback);
+}
+
 module.exports.addBooking = function(newBooking, callback) {
     newBooking.save(callback);
 }

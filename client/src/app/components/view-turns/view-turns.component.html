@@ -8,12 +8,11 @@
         <p class="list-group-item-text">Route: {{turn.cities}}</p>
         <p class="list-group-item-text">Return: {{turn.return}}</p>
         <p class="list-group-item-text">Seats Left: {{seatsLeft(turn.seats)}}</p>
-        <p class="list-group-item-text">Time: {{turn.time}}</p>
+        <p class="list-group-item-text">Time: {{turn.stime}}</p>
         <p class="list-group-item-text">Date: {{turn.date}}</p>
         <br>
         <button type="button" name="button">Cancel</button>
-        <button type="button" name="button">View Bookings</button>
-        <button type="button" name="button" [disabled] = "!isValid(turn.status)" >Print Report</button>
+        <button type="button" name="button" (click) = "print(turn.turn_id)">Print Report</button>
       </div>
     </div>
   </div>

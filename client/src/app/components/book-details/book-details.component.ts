@@ -120,6 +120,7 @@ export class BookDetailsComponent implements OnInit {
     }
 
     // Passing data to Payments
+    this.seats = this.seats.trim();
     localStorage.setItem('name', this.name);
     localStorage.setItem('email', this.email);
     localStorage.setItem('telephone', this.telephone);

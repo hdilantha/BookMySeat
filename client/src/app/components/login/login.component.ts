@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
       email: this.email,
       password: this.password
     }
-
     this.authService.authenticateUser(user).subscribe(data => {
       if(data.success) {
         this.authService.storeUserData(data.token, data.user);

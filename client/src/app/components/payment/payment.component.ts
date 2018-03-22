@@ -77,7 +77,7 @@ export class PaymentComponent implements OnInit {
   }
 
   len(arr: String) {
-    var arr1 = arr.split(" ");
+    var arr1 = arr.trim().split(" ");
     return arr1.length;
   }
 
@@ -103,11 +103,15 @@ export class PaymentComponent implements OnInit {
     return seats;
   }
 
+  genBookingID() {
+    var bid = this.seats.split(" ").join("") + this.nic;
+    return bid;
+  }
   onClickPay() {
     var seats: any[];
 
     const booking = {
-      booking_id: "b1",
+      booking_id: this.genBookingID(),
       turn_id: localStorage.getItem('turn_id'),
       name: this.name,
       email: this.email,

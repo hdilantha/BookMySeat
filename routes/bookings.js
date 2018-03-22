@@ -26,4 +26,10 @@ router.post('/register', (req, res, next) => {
     });
 });
 
+router.get('/getbookings', (req, res, next) => {
+    Booking.getBookingsByTurnId(req.query.turn_id, (err,resp)  => {
+      res.json({bookings: resp});
+    });
+});
+
 module.exports = router;

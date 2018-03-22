@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class AddRouteComponent implements OnInit {
   route_id: String;
   cities: String;
+  city: String;
 
   constructor(private validateService: ValidateService,
     private flashMessage: FlashMessagesService,
@@ -20,6 +21,26 @@ export class AddRouteComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+  }
+
+  addCity(city: string) {
+    if (this.cities != undefined) {
+      var arr = this.cities.split(" ");
+      arr.push(city.trim());
+      this.cities = arr.join(" ");
+    } else {
+      this.cities = city.trim();
+    }
+  }
+
+  removeCity() {
+    if (this.cities != undefined) {
+      var arr = this.cities.split(" ");
+      arr.pop();
+      this.cities = arr.join(" ").trim();
+    } else {
+      this.cities = this.cities;
+    }
   }
 
   onRegisterSubmit() {

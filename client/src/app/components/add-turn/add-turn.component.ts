@@ -21,7 +21,8 @@ export class AddTurnComponent implements OnInit {
   cities: String;
   return: Boolean;
   stime: String;
-  dtime: String
+  dtime: String;
+  ddate: String;
   date: String;
   price: String;
 
@@ -64,6 +65,7 @@ export class AddTurnComponent implements OnInit {
       stime: this.stime,
       dtime: this.dtime,
       date: this.date,
+      ddate: this.ddate,
       price: this.price,
       status: "active",
       seats: "0".repeat(49)
