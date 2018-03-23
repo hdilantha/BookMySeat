@@ -11,11 +11,16 @@ export class HomeComponent implements OnInit {
   starting: string;
   destination: string;
   date: string;
+  source: string[];
 
   constructor(private shareService: ShareService,
     private router: Router) { }
 
   ngOnInit() {
+    this.source = ['Rathnapura',
+    'Panadura',
+    'Galle'
+    ];
   }
 
   onClickSearch() {

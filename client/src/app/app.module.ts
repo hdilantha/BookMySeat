@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes} from '@angular/router';
 import { PdfmakeModule } from 'ng-pdf-make';
+import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -80,7 +81,8 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule,
-    PdfmakeModule
+    PdfmakeModule,
+    Ng2AutoCompleteModule
   ],
   providers: [ValidateService, AuthService, AuthGuard, RouteService, BusService, TurnService, ShareService, BookService],
   bootstrap: [AppComponent]

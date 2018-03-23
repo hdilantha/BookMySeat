@@ -4,10 +4,10 @@
   <p class = "lead">Welcome to the most popular bus booking platform in Sri Lanka</p>
   <div class="row">
     <div class="col-md-4">
-      <input type="text" name="" class="form-control" value="" placeholder="Starting location" [(ngModel)] = "starting" name = "starting">
+      <input auto-complete type="text" name="" class="form-control" value="" placeholder="Starting location" [(ngModel)] = "starting" name = "starting" [source] = "source">
     </div>
     <div class="col-md-4">
-      <input type="text" name="" class="form-control" value="" placeholder="Destination" [(ngModel)] = "destination" name = "destination">
+      <input auto-complete type="text" name="" class="form-control" value="" placeholder="Destination" [(ngModel)] = "destination" name = "destination" [source] = "source">
     </div>
     <div class="col-md-4">
       <input type="date" name="" class="form-control" value="" placeholder="Date" [(ngModel)] = "date" name = "date">
