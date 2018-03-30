@@ -7,6 +7,8 @@
         <p class="list-group-item-text">Type: {{user.type}}</p>
         <p class="list-group-item-text">Telephone: {{user.telephone}}</p>
         <p class="list-group-item-text">Email: {{user.email}}</p>
+        <br>
+        <button type="button" name="button" (click)="remove(user.email)">Remove</button>
       </div>
     </div>
   </div>

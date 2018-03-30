@@ -44,6 +44,10 @@ const TurnSchema = mongoose.Schema({
         type: String,
         required:true
     },
+    ddate: {
+        type: String,
+        required:true
+    },
     price: {
         type: String,
         required:true
@@ -81,7 +85,24 @@ module.exports.getAllTurns = function(email, callback) {
     Turn.find({email: email, status: {$ne: 'expired'}}, callback);
 }
 
+module.exports.getAllTurnsAdmin = function(callback) {
+    Turn.find({status: {$ne: 'expired'}}, callback);
+}
+
 module.exports.setSeats = function(turn_id, newseats, callback) {
     newseats = newseats.split(",");
     Turn.findOneAndUpdate({turn_id: turn_id}, {$set: {seats: newseats}}, callback);
+}
+
+module.exports.updateDatabase = function(callback) {
+    var date = new Date();
+    console.log("Database updated @ " + date.toLocaleTimeString());
+}
+
+module.exports.removeTurn = function(turn_id, callback) {
+  const query = {turn_id: turn_id};
+  Turn.remove(query, (err, values) => {
+    if (err) throw err;
+    callback(null, values);
+  });
 }

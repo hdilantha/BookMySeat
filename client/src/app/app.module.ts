@@ -34,12 +34,18 @@ import { ViewTurnsComponent } from './components/view-turns/view-turns.component
 import { SearchResultsComponent } from './components/search-results/search-results.component';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
 import { PaymentComponent } from './components/payment/payment.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { EditBusComponent } from './components/edit-bus/edit-bus.component';
+import { EditRouteComponent } from './components/edit-route/edit-route.component';
+import { ConfirmComponent } from './components/confirm/confirm.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 
 const appRoutes: Routes = [
   {path:'', component: HomeComponent},
   {path:'register', component: RegisterComponent},
   {path:'login', component: LoginComponent},
   {path:'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
+  {path:'admindashboard', component: AdminDashboardComponent, canActivate: [AuthGuard]},
   {path:'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path:'viewuser', component: ViewUsersComponent, canActivate: [AuthGuard]},
   {path:'addroute', component: AddRouteComponent, canActivate: [AuthGuard]},
@@ -49,9 +55,13 @@ const appRoutes: Routes = [
   {path:'viewbus', component: ViewBusComponent, canActivate: [AuthGuard]},
   {path:'addturn', component: AddTurnComponent, canActivate: [AuthGuard]},
   {path:'viewturn', component: ViewTurnsComponent, canActivate: [AuthGuard]},
+  {path:'changepassword', component: ChangePasswordComponent, canActivate: [AuthGuard]},
+  {path:'editbus', component: EditBusComponent, canActivate: [AuthGuard]},
+  {path:'editroute', component: EditRouteComponent, canActivate: [AuthGuard]},
   {path:'searchresult', component: SearchResultsComponent},
   {path:'bookdetail', component: BookDetailsComponent},
-  {path:'payment', component: PaymentComponent}
+  {path:'payment', component: PaymentComponent},
+  {path:'confirm', component: ConfirmComponent}
 ]
 
 @NgModule({
@@ -73,7 +83,12 @@ const appRoutes: Routes = [
     ViewTurnsComponent,
     SearchResultsComponent,
     BookDetailsComponent,
-    PaymentComponent
+    PaymentComponent,
+    ChangePasswordComponent,
+    EditBusComponent,
+    EditRouteComponent,
+    ConfirmComponent,
+    AdminDashboardComponent
   ],
   imports: [
     BrowserModule,

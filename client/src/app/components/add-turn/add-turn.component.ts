@@ -25,6 +25,7 @@ export class AddTurnComponent implements OnInit {
   ddate: String;
   date: String;
   price: String;
+  seats: String;
 
   constructor(private validateService: ValidateService,
     private flashMessage: FlashMessagesService,
@@ -53,8 +54,21 @@ export class AddTurnComponent implements OnInit {
     });
   }
 
+  getSeats(license) {
+    this.buses.forEach(bus => {
+      if(bus.license == license) {
+        if(bus.type == "2_2") {
+          this.seats = "0".repeat(49);
+        } else {
+          this.seats = "0".repeat(60);
+        }
+      }
+    });
+  }
+
   onAddTurnSubmit() {
     this.getCities(this.route_id);
+    this.getSeats(this.license);
     const turn = {
       turn_id: this.turn_id,
       license: this.license,
@@ -68,8 +82,9 @@ export class AddTurnComponent implements OnInit {
       ddate: this.ddate,
       price: this.price,
       status: "active",
-      seats: "0".repeat(49)
+      seats: this.seats
     }
+
     // Required Fields
     if(!this.validateService.validateTurn(turn)) {
       this.flashMessage.show('Please fill all fields', {cssClass: 'alert-danger', timeout: 3000});

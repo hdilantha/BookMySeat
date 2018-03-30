@@ -19,6 +19,7 @@ router.post('/register', (req, res, next) => {
         stime: req.body.stime,
         dtime: req.body.dtime,
         date: req.body.date,
+        ddate: req.body.ddate,
         price: req.body.price,
         status: req.body.status
     });
@@ -44,6 +45,12 @@ router.get('/allturns', passport.authenticate('jwt', {session:false}), (req, res
     });
 });
 
+router.get('/allturnsadmin', passport.authenticate('jwt', {session:false}), (req, res, next) => {
+    Turn.getAllTurnsAdmin((err,resp)  => {
+      res.json({turns: resp});
+    });
+});
+
 router.get('/getturn', (req, res, next) => {
     Turn.getTurnByTurnId(req.query.turn_id, (err,resp)  => {
       res.json(resp);
@@ -53,9 +60,9 @@ router.get('/getturn', (req, res, next) => {
 router.get('/markseats', (req, res, next) => {
     Turn.setSeats(req.query.turn_id, req.query.seats, (err,resp)  => {
       if(err) {
-          res.json({success: false, msg:'Failed to register turn'});
+          res.json({success: false, msg:'Failed to mark seats'});
       } else {
-          res.json({success: true, msg:'Turn registered'});
+          res.json({success: true, msg:'Seats marked'});
       }
     });
 });
@@ -63,6 +70,17 @@ router.get('/markseats', (req, res, next) => {
 router.get('/searchturns', (req, res, next) => {
     Turn.getTurnByRotue(req.query.starting, req.query.destination, req.query.date, (err,resp)  => {
       res.json({turns: resp});
+    });
+});
+
+// Remove Turn
+router.post('/remove', (req, res, next) => {
+    Turn.removeTurn(req.body.turn_id, (err,resp)  => {
+      if(err) {
+          res.json({success: false, msg:'Failed to save new details'});
+      } else {
+          res.json({success: true, msg:'Turn removed successfully'});
+      }
     });
 });
 

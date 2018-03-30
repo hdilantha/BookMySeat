@@ -52,3 +52,11 @@ module.exports.getBookingsByTurnId = function(turn_id, callback) {
 module.exports.addBooking = function(newBooking, callback) {
     newBooking.save(callback);
 }
+
+module.exports.removeBookings = function(turn_id, callback) {
+  const query = {turn_id: turn_id};
+  Booking.deleteMany(query, (err) => {
+    if (err) throw err;
+    callback(null);
+  });
+}

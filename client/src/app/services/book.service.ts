@@ -21,4 +21,12 @@ export class BookService {
     return this.http.get('http://localhost:3000/bookings/getbookings', { headers: headers, search: params })
       .map(res => res.json());
   }
+
+  // Remove Bookings
+  removeBookings(booking) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/bookings/remove', booking, {headers: headers})
+      .map(res => res.json());
+  }
 }

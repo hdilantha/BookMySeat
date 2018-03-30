@@ -1,0 +1,75 @@
+<div *ngIf="ready()">
+<h2>Welcome {{user}}!</h2>
+<br>
+<div class="row">
+  <div class="col-md-3">
+    <div class="well well-lg">
+      <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>
+      <br>
+      <p class="list-group-item-text pull-left">Total Profit</p>
+      <p class="list-group-item-text pull-right">Rs. {{getPrice(getTotalProfit())}}</p>
+      <br>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="well well-lg">
+      <span class="glyphicon glyphicon glyphicon-check" aria-hidden="true"></span>
+      <br>
+      <p class="list-group-item-text pull-left">Total Bookings</p>
+      <p class="list-group-item-text pull-right">{{getTotalBookings()}}</p>
+      <br>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="well well-lg">
+      <span class="glyphicon glyphicon glyphicon-send" aria-hidden="true"></span>
+      <br>
+      <p class="list-group-item-text pull-left">Active Turns</p>
+      <p class="list-group-item-text pull-right">{{getTotalTurns()}}</p>
+      <br>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="well well-lg">
+      <span class="glyphicon glyphicon glyphicon-bed" aria-hidden="true"></span>
+      <br>
+      <p class="list-group-item-text pull-left">Active Buses</p>
+      <p class="list-group-item-text pull-right">3</p>
+      <br>
+    </div>
+  </div>
+</div>
+<hr/>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">Active Turns information</div>
+      <table class="table">
+        <tr>
+          <th></th>
+          <th>Turn ID</th>
+          <th>Date</th>
+          <th>Starting from</th>
+          <th>Destination</th>
+          <th>Bus</th>
+          <th>Seats Left</th>
+          <th>Operator</th>
+          <th>Profit</th>
+        </tr>
+        <tr *ngFor = "let turn_id of turn_ids">
+          <td></td>
+          <td>{{turn_id}}</td>
+          <td>{{getTurn(turn_id).date}}</td>
+          <td>{{getTurn(turn_id).cities[0]}} @ {{analogToDigital(getTurn(turn_id).stime)}}</td>
+          <td>{{getTurn(turn_id).cities[len(getTurn(turn_id).cities) - 1]}} @ {{analogToDigital(getTurn(turn_id).dtime)}}</td>
+          <td>{{getTurn(turn_id).license}}</td>
+          <td>{{seatsLeft(getTurn(turn_id).seats)}}</td>
+          <td>{{getTurn(turn_id).email}}</td>
+          <td>Rs. {{getPrice(getProfit(turn_id))}}</td>
+          <td><button type="button" name="button" (click)="addBooking(turn_id)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button> <button type="button" name="button" (click)="print(turn_id)" [disabled] = "checkStatus(getTurn(turn_id).status)"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></button></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+</div>

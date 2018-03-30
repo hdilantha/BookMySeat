@@ -32,4 +32,15 @@ router.get('/getbookings', (req, res, next) => {
     });
 });
 
+// Remove Bookings
+router.post('/remove', (req, res, next) => {
+    Booking.removeBookings(req.body.turn_id, (err,resp)  => {
+      if(err) {
+          res.json({success: false, msg:'Failed to save new details'});
+      } else {
+          res.json({success: true, msg:'Bookings removed successfully'});
+      }
+    });
+});
+
 module.exports = router;

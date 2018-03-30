@@ -50,7 +50,7 @@ export class AddBusComponent implements OnInit {
     this.busService.registerBus(bus).subscribe(data => {
       if(data.success) {
         this.flashMessage.show('Bus added successfully', {cssClass: 'alert-success', timeout: 4000});
-        this.router.navigate(['/addbus']);
+        this.router.navigate(['/viewbus']);
       } else {
         this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
         this.router.navigate(['/addbus']);

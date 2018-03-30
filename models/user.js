@@ -62,9 +62,32 @@ module.exports.editUser = function(newUser, callback) {
   });
 }
 
+module.exports.changePassword = function(newUser, callback) {
+  bcrypt.genSalt(10, function(err, salt) {
+      bcrypt.hash(newUser.password, salt, function(err, hash) {
+          if(err) throw err;
+          newUser.password = hash;
+          const query = {email: newUser.email};
+          const values = {password: newUser.password};
+          User.update(query, values, (err, values) => {
+            if (err) throw err;
+            callback(null, values);
+          });
+      });
+  });
+}
+
 module.exports.comparePassword = function(candidatepassword, hash, callback) {
     bcrypt.compare(candidatepassword, hash, function(err, isMatch) {
         if(err) throw err;
         callback(null, isMatch);
     });
+}
+
+module.exports.removeUser = function(email, callback) {
+  const query = {email: email};
+  User.remove(query, (err, values) => {
+    if (err) throw err;
+    callback(null, values);
+  });
 }

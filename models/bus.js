@@ -43,3 +43,20 @@ module.exports.addBus = function(newBus, callback) {
 module.exports.getAllBuses = function(email, callback) {
     Bus.find({email: email, status: 'active'}, callback);
 }
+
+module.exports.editBus = function(newBus, callback) {
+  const query = {license: newBus.license};
+  const values = {owner: newBus.owner, type: newBus.type};
+  Bus.update(query, values, (err, values) => {
+    if (err) throw err;
+    callback(null, values);
+  });
+}
+
+module.exports.removeBus = function(license, callback) {
+  const query = {license: license};
+  Bus.remove(query, (err, values) => {
+    if (err) throw err;
+    callback(null, values);
+  });
+}

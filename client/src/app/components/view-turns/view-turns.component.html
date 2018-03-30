@@ -1,19 +1,30 @@
-<h2 class="page-header">Turn Information</h2>
-<div class="container" style="padding-right: 30%">
-  <div *ngFor = "let turn of turns">
-    <div class="list-group">
-      <div class="list-group-item ">
-        <h4 class="list-group-item-heading">Turn ID: {{turn.turn_id}}</h4>
-        <p class="list-group-item-text">Bus: {{turn.license}}</p>
-        <p class="list-group-item-text">Route: {{turn.cities}}</p>
-        <p class="list-group-item-text">Return: {{turn.return}}</p>
-        <p class="list-group-item-text">Seats Left: {{seatsLeft(turn.seats)}}</p>
-        <p class="list-group-item-text">Time: {{turn.stime}}</p>
-        <p class="list-group-item-text">Date: {{turn.date}}</p>
-        <br>
-        <button type="button" name="button">Cancel</button>
-        <button type="button" name="button" (click) = "print(turn.turn_id)">Print Report</button>
-      </div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">Active Turns information</div>
+      <table class="table">
+        <tr>
+          <th></th>
+          <th>Turn ID</th>
+          <th>Date</th>
+          <th>Starting from</th>
+          <th>Destination</th>
+          <th>Bus</th>
+          <th>Seats Left</th>
+          <th>Price</th>
+        </tr>
+        <tr *ngFor = "let turn of turns">
+          <td></td>
+          <td>{{turn.turn_id}}</td>
+          <td>{{turn.date}}</td>
+          <td>{{turn.cities[0]}} @ {{analogToDigital(turn.stime)}}</td>
+          <td>{{turn.cities[len(turn.cities) - 1]}} @ {{analogToDigital(turn.dtime)}}</td>
+          <td>{{turn.license}}</td>
+          <td>{{seatsLeft(turn.seats)}}</td>
+          <td>Rs. {{getPrice(turn.price)}}</td>
+          <td><button type="button" name="button" (click)="remove(turn.turn_id)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+        </tr>
+      </table>
     </div>
   </div>
 </div>

@@ -32,3 +32,20 @@ module.exports.addRoute = function(newRoute, callback) {
 module.exports.getAllRoutes = function(callback) {
     Route.find({}, callback);
 }
+
+module.exports.editRoute = function(newRoute, callback) {
+  const query = {route_id: newRoute.route_id};
+  const values = {cities: newRoute.cities};
+  Route.update(query, values, (err, values) => {
+    if (err) throw err;
+    callback(null, values);
+  });
+}
+
+module.exports.removeRoute = function(route_id, callback) {
+  const query = {route_id: route_id};
+  Route.remove(query, (err, values) => {
+    if (err) throw err;
+    callback(null, values);
+  });
+}

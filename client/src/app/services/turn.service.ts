@@ -30,6 +30,14 @@ export class TurnService {
       .map(res => res.json());
   }
 
+  getAllTurnsAdmin() {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    return this.http.get('http://localhost:3000/turns/allturnsadmin', {headers: headers})
+      .map(res => res.json());
+  }
+
   getSearchResults(city1: any, city2: any, date: any){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -57,6 +65,14 @@ export class TurnService {
     params.append("turn_id", turn_id);
     params.append("seats", seats);
     return this.http.get('http://localhost:3000/turns/markseats', { headers: headers, search: params })
+      .map(res => res.json());
+  }
+
+  // Remove Turn
+  removeTurn(turn) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/turns/remove', turn, {headers: headers})
       .map(res => res.json());
   }
 }

@@ -26,11 +26,27 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  // Edit User
+  changePassword(user) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/users/change', user, {headers: headers})
+      .map(res => res.json());
+  }
+
   // Login Authenticate
   authenticateUser(user) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post('http://localhost:3000/users/authenticate', user, {headers: headers})
+      .map(res => res.json());
+  }
+
+  // Change Authenticate
+  authenticateChange(user) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/users/authenticatechange', user, {headers: headers})
       .map(res => res.json());
   }
 
@@ -76,6 +92,14 @@ export class AuthService {
     this.authToken = null;
     this.user = null;
     localStorage.clear();
+  }
+
+  // Remove User
+  removeUser(user) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/users/remove', user, {headers: headers})
+      .map(res => res.json());
   }
 
 }

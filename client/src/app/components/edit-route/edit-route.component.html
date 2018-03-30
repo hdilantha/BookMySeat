@@ -1,0 +1,24 @@
+<div class="container" style="padding-right: 50%">
+  <h2 class = "page-header">Edit route</h2>
+  <form (submit) = "onEditSubmit()">
+    <div class="form-group">
+      <label>Route ID</label>
+      <input type="text" [(ngModel)] = "route_id" name = "route_id" class="form-control" disabled>
+    </div>
+    <div class="input-group">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" (click) = "addCity(city)">Add City</button>
+      </span>
+      <input type="text" class="form-control" [(ngModel)] = "city" name = "city" id="name">
+    </div>
+    <br>
+    <div class="form-group pull-left">
+      <label>Cities: {{cities}}</label>
+    </div>
+    <button type="button" name="button" class="btn btn-default pull-right" (click) = "removeCity()">Remove</button>
+    <br>
+    <br>
+    <br>
+    <input type="submit" class="btn btn-primary" value="Save">
+  </form>
+</div>

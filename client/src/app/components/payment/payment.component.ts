@@ -11,13 +11,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./payment.component.css']
 })
 export class PaymentComponent implements OnInit {
-  name: String;
+  name: string;
   telephone: String;
   email: String;
   nic: String;
-  turnseats: any;
   seats: String;
-  cseats: any;
   price: String
   flag: boolean;
 
@@ -28,6 +26,7 @@ export class PaymentComponent implements OnInit {
   destination: String;
   date: String;
   stime: String;
+  turnseats: any;
 
   constructor(private turnService: TurnService,
     private bookService: BookService,
@@ -46,6 +45,7 @@ export class PaymentComponent implements OnInit {
     this.nic = localStorage.getItem('nic');
     this.seats = localStorage.getItem('seats');
     this.price = localStorage.getItem('price');
+    this.turnseats = localStorage.getItem('turnseats').split(",");
 
     this.starting = localStorage.getItem('starting');
     this.destination = localStorage.getItem('destination');
@@ -57,8 +57,8 @@ export class PaymentComponent implements OnInit {
 
   calcBill() {
     this.tprice = this.len(this.seats) * (+this.price);
-    this.bcharge = this.len(this.seats) * 120;
-    this.total = this.len(this.seats) * (+this.price) + this.len(this.seats) * 120;
+    this.bcharge = this.len(this.seats) * 30;
+    this.total = this.tprice + this.bcharge;
   }
 
   analogToDigital(time: String) {
@@ -107,6 +107,17 @@ export class PaymentComponent implements OnInit {
     var bid = this.seats.split(" ").join("") + this.nic;
     return bid;
   }
+
+  seatsLeft(seats) {
+    var count = 0
+    for (var seat of seats) {
+      if (seat == "0") {
+        count = count + 1;
+      }
+    }
+    return count - 1;
+  }
+
   onClickPay() {
     var seats: any[];
 
@@ -123,25 +134,30 @@ export class PaymentComponent implements OnInit {
     // Mark Seats
     this.turnService.getTurn(localStorage.getItem('turn_id')).subscribe(turn => {
       seats = turn.seats;
-      seats = this.markSeats(seats, this.seats, this.nic);
-      this.turnService.markSeats(localStorage.getItem('turn_id'), seats).subscribe(data => {
-        if(data.success) {
-          // Register Booking
-          this.bookService.registerBooking(booking).subscribe(data => {
-            if(data.success) {
-              this.flashMessage.show('Booking successful', {cssClass: 'alert-success', timeout: 4000});
-              localStorage.clear();
-              this.router.navigate(['/']);
-            } else {
-              this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
-              // this.router.navigate(['/addturn']);
-            }
-          });
-        } else {
-          this.flashMessage.show('Selected seats were just got booked', {cssClass: 'alert-danger', timeout: 3000});
-          this.router.navigate(['/bookdetail']);
-        }
-      });
+      if (this.seatsLeft(seats) - 1 == this.seatsLeft(this.turnseats)) {
+        seats = this.markSeats(seats, this.seats, this.nic);
+        this.turnService.markSeats(localStorage.getItem('turn_id'), seats).subscribe(data => {
+          if(data.success) {
+            // Register Booking
+            this.bookService.registerBooking(booking).subscribe(data => {
+              if(data.success) {
+                this.flashMessage.show('Booking successful! Thank you!', {cssClass: 'alert-success', timeout: 4000});
+                localStorage.clear();
+                localStorage.setItem('name', this.name);
+                this.router.navigate(['/confirm']);
+              } else {
+                this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
+              }
+            });
+          } else {
+            this.flashMessage.show('Something went wrong!', {cssClass: 'alert-danger', timeout: 3000});
+            this.router.navigate(['/bookdetail']);
+          }
+        });
+      } else {
+        this.flashMessage.show('Sorry! Selected seats were just got booked!', {cssClass: 'alert-danger', timeout: 3000});
+        this.router.navigate(['/bookdetail']);
+      }
     });
   }
 }

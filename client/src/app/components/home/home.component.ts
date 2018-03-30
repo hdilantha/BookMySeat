@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ShareService } from '../../services/share.service';
+import { RouteService } from '../../services/route.service'
 import { Router } from '@angular/router';
+import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 
 @Component({
   selector: 'app-home',
@@ -11,16 +13,19 @@ export class HomeComponent implements OnInit {
   starting: string;
   destination: string;
   date: string;
-  source: string[];
+  sources: any[];
+  routes: any[];
 
   constructor(private shareService: ShareService,
-    private router: Router) { }
+    private routeService: RouteService,
+    private router: Router,
+    private autoComplete: Ng2AutoCompleteModule) { }
 
   ngOnInit() {
-    this.source = ['Rathnapura',
-    'Panadura',
-    'Galle'
-    ];
+    this.routeService.getAllCities().subscribe(cities => {
+      this.sources = cities.cities;
+
+    });
   }
 
   onClickSearch() {

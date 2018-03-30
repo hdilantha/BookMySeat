@@ -5,6 +5,8 @@ import { BusService } from '../../services/bus.service';
 import { RouteService } from '../../services/route.service';
 import { BookService } from '../../services/book.service';
 import { Router } from '@angular/router';
+import { PdfmakeService } from 'ng-pdf-make/pdfmake/pdfmake.service';
+import { Cell, Row, Table } from 'ng-pdf-make/objects/table';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,7 +25,8 @@ export class DashboardComponent implements OnInit {
     private busService: BusService,
     private routeService: RouteService,
     private bookService: BookService,
-    private router: Router) {
+    private router: Router,
+    private pdfmake: PdfmakeService) {
       this.bookings = new Map();
       this.turns = new Map();
       this.turn_ids = [];
@@ -42,6 +45,10 @@ export class DashboardComponent implements OnInit {
         this.turns.set(turn.turn_id, turn);
       });
     });
+  }
+
+  checkStatus(status) {
+    return status === 'inactive';
   }
 
   ready() {
@@ -134,7 +141,48 @@ export class DashboardComponent implements OnInit {
       var res = time + " AM";
       return res;
     }
-
   }
 
+  addBooking(turn_id) {
+    localStorage.setItem('turn_id', turn_id);
+    localStorage.setItem('starting', this.turns.get(turn_id).cities[0]);
+    localStorage.setItem('destination', this.turns.get(turn_id).cities[this.len(this.turns.get(turn_id).cities) - 1]);
+    localStorage.setItem('date', this.turns.get(turn_id).date);
+    this.router.navigate(['/bookdetail']);
+  }
+
+  print(turn_id) {
+    var bookings = [];
+    var res = this.turns.get(turn_id);
+    console.log(res.license);
+    this.bookService.getBookings(turn_id).subscribe(resp => {
+      bookings = resp.bookings;
+      this.pdfmake.configureStyles({ header: { fontSize: 12, bold: true },  header2: { fontSize: 10, bold: true }, normal: { fontSize: 10 } });
+
+      this.pdfmake.addText("Turn ID: " + turn_id.toString(), 'header');
+      this.pdfmake.addText(" ");
+      this.pdfmake.addText("Bus: " + res.license + "      Route: " + res.cities[0] + " to " +  res.cities[this.len(res.cities)], 'normal');
+      this.pdfmake.addText("Date: " + res.date, 'normal');
+      this.pdfmake.addText(" ");
+
+      const header1 = new Cell('NIC');
+      const header2 = new Cell('Name');
+      const header3 = new Cell('Seats');
+      const header4 = new Cell('Telephone');
+
+      const headerRows = new Row([header1, header2, header3, header4]);
+      const widths = [100, 200, 100, 100];
+      var rows = [];
+
+      bookings.forEach(booking => {
+        var row = new Row([new Cell(booking.nic.toString()), new Cell(booking.name.toString()), new Cell(booking.seats.toString()), new Cell(booking.telephone.toString())]);
+        rows.push(row);
+      });
+
+      const table = new Table(headerRows, rows, widths);
+      this.pdfmake.addTable(table);
+      this.pdfmake.download();
+      this.pdfmake.docDefinition.content.length = 0;
+    });
+  }
 }

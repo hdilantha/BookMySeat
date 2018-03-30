@@ -5,6 +5,9 @@ const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const config = require('./config/database');
+const schedule = require('node-schedule');
+
+const Turn = require('./models/turn');
 
 mongoose.connect(config.database);
 
@@ -61,4 +64,11 @@ app.get('*', (req, res) => {
 // Start Server
 app.listen(port, () => {
     console.log('Server started on port ' + port);
+});
+
+// Update database
+var j = schedule.scheduleJob('30 * * * *', function(){
+  Turn.updateDatabase(() => {
+    console.log('done');
+  });
 });

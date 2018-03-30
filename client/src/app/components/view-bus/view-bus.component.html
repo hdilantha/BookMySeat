@@ -1,11 +1,13 @@
 <h2 class="page-header">Active Buses Information</h2>
-<div class="container" style="padding-right: 50%">
+<div class="container" style="padding-right: 70%">
   <div *ngFor = "let bus of buses">
     <div class="list-group">
-      <a href="#" class="list-group-item">
+      <div class="list-group-item">
         <h4 class="list-group-item-heading">{{bus.license}} {{bus.owner}}</h4>
         <p class="list-group-item-text">Seat type: {{bus.type}}</p>
-      </a>
+        <br>
+        <button type="button" name="button" (click)="onClickEdit(bus)">Edit</button> <button type="button" name="button" (click)="onClickRemove(bus.license)">Remove</button>
+      </div>
     </div>
   </div>
 </div>

@@ -25,9 +25,9 @@ export class AddRouteComponent implements OnInit {
 
   addCity(city: string) {
     if (this.cities != undefined) {
-      var arr = this.cities.split(" ");
+      var arr = this.cities.split(",");
       arr.push(city.trim());
-      this.cities = arr.join(" ");
+      this.cities = arr.join(",");
     } else {
       this.cities = city.trim();
     }
@@ -35,9 +35,9 @@ export class AddRouteComponent implements OnInit {
 
   removeCity() {
     if (this.cities != undefined) {
-      var arr = this.cities.split(" ");
+      var arr = this.cities.split(",");
       arr.pop();
-      this.cities = arr.join(" ").trim();
+      this.cities = arr.join(",").trim();
     } else {
       this.cities = this.cities;
     }

@@ -29,4 +29,20 @@ export class BusService {
     return this.http.get('http://localhost:3000/buses/allbuses', {headers: headers})
       .map(res => res.json());
   }
+
+  // Edit Bus
+  editBus(bus) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/buses/edit', bus, {headers: headers})
+      .map(res => res.json());
+  }
+
+  // Remove BusService
+  removeBus(bus) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/buses/remove', bus, {headers: headers})
+      .map(res => res.json());
+  }
 }

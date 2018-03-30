@@ -31,9 +31,36 @@ router.post('/register', (req, res, next) => {
     });
 });
 
+// Edit
+router.post('/edit', (req, res, next) => {
+    let newBus = new Bus({
+        license: req.body.license,
+        owner: req.body.owner,
+        type: req.body.type
+    });
+    Bus.editBus(newBus, (err, user) => {
+        if(err) {
+            res.json({success: false, msg:'Failed to save new details'});
+        } else {
+            res.json({success: true, msg:'Bus edited successfully'});
+        }
+    });
+});
+
 router.get('/allbuses', passport.authenticate('jwt', {session:false}), (req, res, next) => {
     Bus.getAllBuses(req.user.email, (err,resp)  => {
       res.json({buses: resp});
+    });
+});
+
+// Remove Bus
+router.post('/remove', (req, res, next) => {
+    Bus.removeBus(req.body.license, (err,resp)  => {
+      if(err) {
+          res.json({success: false, msg:'Failed to save new details'});
+      } else {
+          res.json({success: true, msg:'Bus removed successfully'});
+      }
     });
 });
 

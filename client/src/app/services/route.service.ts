@@ -25,8 +25,29 @@ export class RouteService {
       .map(res => res.json());
   }
 
+  getAllCities() {
+    return this.http.get('http://localhost:3000/routes/allcities')
+      .map(res => res.json());
+  }
+
   loadToken() {
     const token = localStorage.getItem('id_token');
     this.authToken = token;
+  }
+
+  // Edit Bus
+  editRoute(route) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/routes/edit', route, {headers: headers})
+      .map(res => res.json());
+  }
+
+  // Remove Route
+  removeRoute(route) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/routes/remove', route, {headers: headers})
+      .map(res => res.json());
   }
 }

@@ -1,0 +1,21 @@
+<div class="container" style="padding-right: 70%">
+  <h2 class = "page-header">Edit bus</h2>
+  <form (submit) = "onEditSubmit()">
+    <div class="form-group">
+      <label>License plate</label>
+      <input type="text" [(ngModel)] = "license" name = "license" class="form-control" disabled="true">
+    </div>
+    <div class="form-group">
+      <label>Owner</label>
+      <input type="text" [(ngModel)] = "owner" name = "owner" class="form-control">
+    </div>
+    <div class="form-group">
+      <label>Seat type</label>
+      <select class="form-control" [(ngModel)] = "type" name = "type">
+        <option value="2_2">2 and 2</option>
+        <option value="2_3">2 and 3</option>
+      </select>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Submit">
+  </form>
+</div>

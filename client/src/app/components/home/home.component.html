@@ -1,13 +1,13 @@
-<div class="jumbotron text-center" style="background-image: url(../../assets/home.jpg); background-position: center; background-size:100%; background-repeat: no-repeat">
+<div class="jumbotron text-center" style="background-image: url(../../assets/home.jpg); background-position:center; background-size:auto; background-repeat:no-repeat; background-size:cover;">
   <h1>BookMySeat</h1>
   <h2>Online Bus Booking Platform</h2>
-  <p class = "lead">Welcome to the most popular bus booking platform in Sri Lanka</p>
+  <p class = "lead">Welcome to the #1 bus booking platform in Sri Lanka</p>
   <div class="row">
     <div class="col-md-4">
-      <input auto-complete type="text" name="" class="form-control" value="" placeholder="Starting location" [(ngModel)] = "starting" name = "starting" [source] = "source">
+      <input auto-complete type="text" class="form-control" value="" placeholder="Starting location" [(ngModel)] = "starting" name = "starting" [source] = "sources">
     </div>
     <div class="col-md-4">
-      <input auto-complete type="text" name="" class="form-control" value="" placeholder="Destination" [(ngModel)] = "destination" name = "destination" [source] = "source">
+      <input auto-complete type="text" class="form-control" value="" placeholder="Destination" [(ngModel)] = "destination" name = "destination" [source] = "sources">
     </div>
     <div class="col-md-4">
       <input type="date" name="" class="form-control" value="" placeholder="Date" [(ngModel)] = "date" name = "date">
@@ -18,11 +18,10 @@
     <button class = "btn btn-primary" (click)="onClickSearch()">Search</button>
   </div>
 </div>
-
+<br>
+<h3>Popular destinations</h3>
 <br>
 <div class="row">
-  <h3>Popular destinations</h3>
-  <br>
   <div class="col-sm-6 col-md-4">
     <div class="thumbnail">
       <img src="../../assets/meemure.jpg" alt="...">
@@ -54,3 +53,52 @@
     </div>
   </div>
 </div>
+<hr/>
+<footer class="hidden-xs">
+  <div class="row">
+    <div class="col-md-4">
+      <h3 class="list-group-item-heading">Ayubowan!</h3>
+      <br>
+      <p class="list-group-item-text"><strong>Contact us!</strong></p>
+      <p class="list-group-item-text">Hotline: 0115-116-xxx</p>
+      <p class="list-group-item-text">8.00 A.M - 8.00 P.M. (Sri Lanka Time)</p>
+      <br>
+      <p class="list-group-item-text"><strong>Find us on Whatsapp and Viber</strong></p>
+      <p class="list-group-item-text">Save 077-1234567 on your phone</p>
+      <br>
+      <p class="list-group-item-text"><strong>Write to us!</strong></p>
+      <p class="list-group-item-text">Email: info@bookmyseat.com</p>
+      <p class="list-group-item-text">Complaints, Ideas to improve, anything..</p>
+    </div>
+    <div class="col-md-4">
+      <h3 class="list-group-item-heading">Connect with us</h3>
+      <br>
+      <p class="list-group-item-text"><strong>Find us on</strong></p>
+      <br>
+      <a href="#" class="fa fa-facebook"></a>
+      <a href="#" class="fa fa-twitter"></a>
+      <a href="#" class="fa fa-google"></a>
+      <a href="#" class="fa fa-youtube"></a>
+      <a href="#" class="fa fa-instagram"></a>
+      <br>
+      <br>
+      <h3 class="list-group-item-heading">Terms & Regulations</h3>
+      <p class="list-group-item-text"><strong>terms & regulations</strong></p>
+      <br>
+    </div>
+    <div class="col-md-4">
+      <h3 class="list-group-item-heading">Have a bus? Want to join us?</h3>
+      <br>
+      <p class="list-group-item-text"><strong>We are more than ready to connect you with the passengers</strong></p>
+      <br>
+      <p class="list-group-item-text"><strong>Send a request</strong></p>
+      <p class="list-group-item-text">Email: request@bookmyseat.com</p>
+      <p class="list-group-item-text">We will consider your request and get back to you</p>
+      <br>
+      <p class="list-group-item-text"><strong>Contact our admins for more details</strong></p>
+      <p class="list-group-item-text">Hotline: 0115-116-xxx</p>
+      <p class="list-group-item-text">8.00 A.M - 8.00 P.M. (Sri Lanka Time)</p>
+    </div>
+  </div>
+</footer>
+<br><br><br>

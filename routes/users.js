@@ -48,6 +48,21 @@ router.post('/edit', (req, res, next) => {
     });
 });
 
+// Change
+router.post('/change', (req, res, next) => {
+    let newUser = new User({
+        email: req.body.email,
+        password: req.body.npassword
+    });
+    User.changePassword(newUser, (err, user) => {
+        if(err) {
+            res.json({success: false, msg:'Failed to save new details'});
+        } else {
+            res.json({success: true, msg:'User edited successfully'});
+        }
+    });
+});
+
 // Authenticate
 router.post('/authenticate', (req, res, next) => {
     const email = req.body.email;
@@ -84,6 +99,27 @@ router.post('/authenticate', (req, res, next) => {
     });
 });
 
+router.post('/authenticatechange', (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    User.getUserByEmail(email, function(err, user) {
+        if(err) throw err;
+        if(!user) {
+            return res.json({success: false, msg: 'User not found'});
+        }
+
+        User.comparePassword(password, user.password, function(err, isMatch) {
+            if(err) throw err;
+            if(isMatch) {
+                res.json({success: true, msg: 'Successfull'});
+            } else {
+                return res.json({success: false, msg: 'Wrong password'});
+            }
+        });
+    });
+});
+
 // Profile
 router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res, next) => {
     res.json({user: req.user});
@@ -95,5 +131,15 @@ router.get('/allusers', passport.authenticate('jwt', {session:false}), (req, res
     });
 });
 
+// Remove User
+router.post('/remove', (req, res, next) => {
+    User.removeUser(req.body.email, (err,resp)  => {
+      if(err) {
+          res.json({success: false, msg:'Failed to remove'});
+      } else {
+          res.json({success: true, msg:'User removed successfully'});
+      }
+    });
+});
 
 module.exports = router;

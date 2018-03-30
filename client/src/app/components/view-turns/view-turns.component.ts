@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TurnService } from '../../services/turn.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
 import { BookService } from '../../services/book.service';
 import { Router } from '@angular/router';
 import { PdfmakeService } from 'ng-pdf-make/pdfmake/pdfmake.service';
@@ -15,7 +16,8 @@ export class ViewTurnsComponent implements OnInit {
   bookings: any[];
   res: any;
 
-  constructor(private turnService: TurnService,
+  constructor(private flashMessage: FlashMessagesService,
+    private turnService: TurnService,
     private bookService: BookService,
     private router: Router,
     private pdfmake: PdfmakeService) { }
@@ -56,41 +58,57 @@ export class ViewTurnsComponent implements OnInit {
     }
   }
 
-  print(turn_id) {
-    this.bookings = [];
-    this.turns.forEach((turn) => {
-      if(turn.turn_id === turn_id) {
-        this.res = turn;
+  analogToDigital(time: String) {
+    var arr = time.split(":");
+    if (+arr[0] > 11) {
+      var res = (+arr[0] - 12).toString() + ":" + arr[1] + " PM";
+      return res;
+    } else if (arr[0] == "00") {
+      var res = 12 + ":" + arr[1] + " AM";
+      return res;
+    } else {
+      var res = time + " AM";
+      return res;
+    }
+  }
+
+  getPrice(price: any) {
+    price = price.toString();
+    if (price.indexOf('.') > -1) {
+      var arr = price.split(".")[1]
+      if (arr.length == 0) {
+        return price + "00"
       }
-    });
-    this.bookService.getBookings(turn_id).subscribe(resp => {
-      this.bookings = resp.bookings;
-      this.pdfmake.configureStyles({ header: { fontSize: 12, bold: true },  header2: { fontSize: 10, bold: true }, normal: { fontSize: 10 } });
+      if (arr.length == 1) {
+        return price + "0"
+      }
+    }
+    return price + ".00"
+  }
 
-      this.pdfmake.addText("Turn ID: " + turn_id.toString(), 'header');
-      this.pdfmake.addText(" ");
-      this.pdfmake.addText("Bus: " + this.res.license.toString() + "      Route: " + this.res.cities[0].toString() + " to " +  this.res.cities[this.len(this.res.cities)].toString(), 'normal');
-      this.pdfmake.addText("Date: " + this.res.date.toString(), 'normal');
-      this.pdfmake.addText(" ");
-
-      const header1 = new Cell('NIC');
-      const header2 = new Cell('Name');
-      const header3 = new Cell('Seats');
-      const header4 = new Cell('Telephone');
-
-      const headerRows = new Row([header1, header2, header3, header4]);
-      const widths = [100, 200, 100, 100];
-      var rows = [];
-
-      this.bookings.forEach(booking => {
-        var row = new Row([new Cell(booking.nic.toString()), new Cell(booking.name.toString()), new Cell(booking.seats.toString()), new Cell(booking.telephone.toString())]);
-        rows.push(row);
+  remove(turn_id) {
+    if(confirm("Are you sure you want to delete the turn " + turn_id + "? \nThis cannot be undone!")) {
+      const turn = {
+        turn_id: turn_id
+      }
+      this.turnService.removeTurn(turn).subscribe(data => {
+        if(data.success) {
+          const booking = {
+            turn_id: turn_id
+          }
+          this.bookService.removeBookings(booking).subscribe(data => {
+            if(data.success) {
+              this.flashMessage.show('Turn removed successfully', {cssClass: 'alert-success', timeout: 3000});
+              window.location.href = "/viewturn";
+            } else {
+              this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
+            }
+          });
+          // Refund getBookings
+        } else {
+          this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
+        }
       });
-
-      const table = new Table(headerRows, rows, widths);
-      this.pdfmake.addTable(table);
-      this.pdfmake.download();
-      this.pdfmake.docDefinition.content.length = 0;
-    });
+    }
   }
 }
