@@ -13,7 +13,6 @@ mongoose.connect(config.database);
 
 mongoose.connection.on('connected', () => {
     console.log('Connected to database ' + config.database);
-    // expire turns
 });
 
 mongoose.connection.on('error', (err) => {
@@ -27,6 +26,7 @@ const buses = require('./routes/buses');
 const turns = require('./routes/turns');
 const routes = require('./routes/routes');
 const bookings = require('./routes/bookings');
+const email = require('./routes/email');
 
 // Port Number
 const port = 3000;
@@ -51,6 +51,7 @@ app.use('/buses', buses);
 app.use('/turns', turns);
 app.use('/routes', routes);
 app.use('/bookings', bookings);
+app.use('/email', email);
 
 // Index Route
 app.get('/', (req, res) => {

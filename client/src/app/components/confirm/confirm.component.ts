@@ -16,9 +16,11 @@ export class ConfirmComponent implements OnInit {
     this.flag = false;
     if (localStorage.getItem('name') === null) {
       this.router.navigate(['/']);
+    } else {
+      this.name = localStorage.getItem('name').split(" ")[0];
+      localStorage.clear();
+      this.flag = true;
     }
-    this.name = localStorage.getItem('name').split(" ")[0];
-    this.flag = true;
   }
 
   onClickBack() {

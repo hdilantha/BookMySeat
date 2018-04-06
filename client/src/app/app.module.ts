@@ -22,6 +22,7 @@ import { BusService } from './services/bus.service';
 import { TurnService } from './services/turn.service';
 import { ShareService } from './services/share.service';
 import { BookService } from './services/book.service';
+import { EmailService } from './services/email.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ViewUsersComponent } from './components/view-users/view-users.component';
 import { AddRouteComponent } from './components/add-route/add-route.component';
@@ -99,7 +100,7 @@ const appRoutes: Routes = [
     PdfmakeModule,
     Ng2AutoCompleteModule
   ],
-  providers: [ValidateService, AuthService, AuthGuard, RouteService, BusService, TurnService, ShareService, BookService],
+  providers: [ValidateService, AuthService, AuthGuard, RouteService, BusService, TurnService, ShareService, BookService, EmailService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
 <div *ngIf="flag">
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-4" style="padding-right:30px">
     <h2 class = "page-header">Passenger Details</h2>
     <form (submit) = "onClickNext()">
       <div class="form-group">
@@ -27,7 +27,7 @@
     </form>
   </div>
   <div class="col-md-7">
-    <div style="padding-left:30px">
+    <!-- <div style="padding-left:30px">
     <h2 class = "page-header">Seat Arrangement</h2>
     <label class="pull-left"> <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> Driver </label>
     <br>
@@ -58,7 +58,43 @@
         <input type="checkbox" id="" value="" > Available
       </div>
     </label>
+    </div> -->
+
+    <h2 class = "page-header">Seat Arrangement</h2>
+    <label class="pull-left"> <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> Driver </label>
+    <br>
+    <br>
+    <div class="panel panel-default" style="padding-left:4%">
+      <div class="panel-body">
+        <table>
+          <tr *ngFor = "let row of cseats">
+            <td *ngFor = "let col of row">
+              <label *ngFor = "let seat of col">
+                <div [ngClass]="{'big-checkbox': func1(seat), 'big-checkbox-hidden': !func1(seat) }">
+                  <input type="checkbox" id="{{seat}}" value="{{seat}}" [disabled] = "func1(turnseats[seat - 1])" (click) = "getSeats(seat)"> {{func(seat)}}
+                </div>
+              </label>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <label class="pull-left"> IN <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> </label><label class="pull-right" style="padding-right: 19%"> OUT <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span> </label>
+    <br>
+    <br>
+    <div style="padding-left: 30px">
+      <label>
+      <div class="big-checkbox" >
+        <input type="checkbox" id="" value="" disabled> Reserved
+      </div>
+      </label>
+      <label style="padding-left: 20px">
+        <div class="big-checkbox">
+          <input type="checkbox" id="" value="" > Available
+        </div>
+      </label>
     </div>
   </div>
 </div>
 </div>
+<br>

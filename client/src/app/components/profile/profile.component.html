@@ -1,13 +1,15 @@
 <div *ngIf = "user">
-  <h2 class="page-header">{{user.name}}</h2>
-  <div class="container" style="padding-right: 70%">
-  <ul class="list-group">
-    <li class="list-group-item">Name: {{user.name}}</li>
-    <li class="list-group-item">Telephone: {{user.telephone}}</li>
-    <li class="list-group-item">Email: {{user.email}}</li>
-  </ul>
-  <button class = "btn btn-default" [routerLink] = "['/edituser']" [queryParams] = "{name:user.name, telephone:user.telephone, email:user.email}">Edit</button>
-  <button class = "btn btn-default" [routerLink] = "['/changepassword']">Change Password</button>
+  <h2 class="page-header">{{user.name}}'s Profile</h2>
+  <div class="row">
+    <div class="col-md-5">
+      <ul class="list-group">
+        <li class="list-group-item">Name: {{user.name}}</li>
+        <li class="list-group-item">Telephone: {{user.telephone}}</li>
+        <li class="list-group-item">Email: {{user.email}}</li>
+      </ul>
+      <button class = "btn btn-default" [routerLink] = "['/edituser']" [queryParams] = "{name:user.name, telephone:user.telephone, email:user.email}">Edit</button>
+      <button class = "btn btn-default" [routerLink] = "['/changepassword']">Change Password</button>
+    </div>
   </div>
 </div>
 <br>

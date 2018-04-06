@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShareService } from '../../services/share.service';
-import { RouteService } from '../../services/route.service'
+import { RouteService } from '../../services/route.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 
@@ -18,6 +19,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private shareService: ShareService,
     private routeService: RouteService,
+    private flashMessage: FlashMessagesService,
     private router: Router,
     private autoComplete: Ng2AutoCompleteModule) { }
 

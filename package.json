@@ -8,6 +8,7 @@
     "start": "node app"
   },
   "dependencies": {
+    "@sendgrid/mail": "^6.2.1",
     "bcryptjs": "*",
     "body-parser": "*",
     "cors": "*",

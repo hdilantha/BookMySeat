@@ -3,6 +3,7 @@ import { ValidateService } from '../../services/validate.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { TurnService } from '../../services/turn.service';
 import { BookService } from '../../services/book.service';
+import { EmailService } from '../../services/email.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -30,6 +31,7 @@ export class PaymentComponent implements OnInit {
 
   constructor(private turnService: TurnService,
     private bookService: BookService,
+    private emailService: EmailService,
     private flashMessage: FlashMessagesService,
     private validateService: ValidateService,
     private router: Router) { }
@@ -38,21 +40,22 @@ export class PaymentComponent implements OnInit {
     this.flag = false;
     if (localStorage.getItem('name') === null) {
       this.router.navigate(['/']);
-    }
-    this.name = localStorage.getItem('name');
-    this.email = localStorage.getItem('email');
-    this.telephone = localStorage.getItem('telephone');
-    this.nic = localStorage.getItem('nic');
-    this.seats = localStorage.getItem('seats');
-    this.price = localStorage.getItem('price');
-    this.turnseats = localStorage.getItem('turnseats').split(",");
+    } else {
+      this.name = localStorage.getItem('name');
+      this.email = localStorage.getItem('email');
+      this.telephone = localStorage.getItem('telephone');
+      this.nic = localStorage.getItem('nic');
+      this.seats = localStorage.getItem('seats');
+      this.price = localStorage.getItem('price');
+      this.turnseats = localStorage.getItem('turnseats').split(",");
 
-    this.starting = localStorage.getItem('starting');
-    this.destination = localStorage.getItem('destination');
-    this.date = localStorage.getItem('date');
-    this.stime = localStorage.getItem('stime');
-    this.calcBill();
-    this.flag = true;
+      this.starting = localStorage.getItem('starting');
+      this.destination = localStorage.getItem('destination');
+      this.date = localStorage.getItem('date');
+      this.stime = localStorage.getItem('stime');
+      this.calcBill();
+      this.flag = true;
+    }
   }
 
   calcBill() {
@@ -141,10 +144,26 @@ export class PaymentComponent implements OnInit {
             // Register Booking
             this.bookService.registerBooking(booking).subscribe(data => {
               if(data.success) {
-                this.flashMessage.show('Booking successful! Thank you!', {cssClass: 'alert-success', timeout: 4000});
-                localStorage.clear();
-                localStorage.setItem('name', this.name);
-                this.router.navigate(['/confirm']);
+                var text = "Dear " + this.name.trim().split(" ")[0] + ",<br/>Thank you for using bookmyseat. Please consider this email as the confirmation of your booking.<br/>Please check the details again.<br/><br/>Passenger details<br/>Name: "
+                + this.name + "<br/>Telephone: " + this.telephone + "<br/>NIC: " + this.nic + "<br/><br/>Journey details<br/>" + this.starting + " to " + this.destination + "<br/>Date: " + this.date + "<br/>Time: " + this.analogToDigital(this.stime) + "<br/>Passengers: " + this.len(this.seats)
+                + "<br/><br/>If there's any inconvenience please contact us.<br/>Hotline: 011-1234567<br/><br/>Happy Journey! Thank you";
+                const msg = {
+                  to: this.email,
+                  from: 'info@bookmyseat.com',
+                  subject: 'Confirmation of booking',
+                  text: text,
+                  html: text,
+                };
+                this.emailService.sendMail(msg).subscribe(data => {
+                  if(data.success) {
+                    this.flashMessage.show('Booking successful! Thank you!', {cssClass: 'alert-success', timeout: 4000});
+                    this.router.navigate(['/confirm']);
+                  } else {
+                    this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
+                  }
+                });
+
+
               } else {
                 this.flashMessage.show(data.msg, {cssClass: 'alert-danger', timeout: 3000});
               }

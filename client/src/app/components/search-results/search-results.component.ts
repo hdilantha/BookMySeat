@@ -23,10 +23,11 @@ export class SearchResultsComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('starting') === null) {
       this.router.navigate(['/']);
+    } else {
+      this.loadTurns(() => {
+        this.loadResults();
+      });
     }
-    this.loadTurns(() => {
-      this.loadResults();
-    });
   }
 
   len(arr: any[]) {
@@ -61,7 +62,7 @@ export class SearchResultsComponent implements OnInit {
       return res;
     }
   }
-  
+
   checkTurn() {
     return this.results.length;
   }
