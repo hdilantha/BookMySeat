@@ -43,7 +43,7 @@ export class SearchResultsComponent implements OnInit {
 
   loadResults() {
     this.turns.forEach((item) => {
-      if(this.checkCities(item.cities, localStorage.getItem('starting'), localStorage.getItem('destination'))) {
+      if(this.checkCities(item.cities, localStorage.getItem('starting'), localStorage.getItem('destination')) && item.status == 'active') {
         this.results = this.results.concat(item);
       }
     });

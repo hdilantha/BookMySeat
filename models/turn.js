@@ -94,15 +94,39 @@ module.exports.setSeats = function(turn_id, newseats, callback) {
     Turn.findOneAndUpdate({turn_id: turn_id}, {$set: {seats: newseats}}, callback);
 }
 
-module.exports.updateDatabase = function(callback) {
-    var date = new Date();
-    console.log("Database updated @ " + date.toLocaleTimeString());
-}
-
 module.exports.removeTurn = function(turn_id, callback) {
   const query = {turn_id: turn_id};
   Turn.remove(query, (err, values) => {
     if (err) throw err;
     callback(null, values);
   });
+}
+
+module.exports.updateDatabase = function(callback) {
+    var date = new Date();
+    Turn.find({status: {$ne: 'expired'}}, (err, res) => {
+      var turns = res;
+      for (var i = 0; i < turns.length; i++) {
+        var temp = turns[i].date + 'T' + turns[i].stime;
+        var check = new Date(temp);
+        if (compare(check, date) == 'expired') {
+          Turn.findOneAndUpdate({turn_id: turns[i].turn_id}, {$set: {status: 'expired'}}, callback);
+        } else if (compare(check, date) == 'inactive' && turns[i].status == 'active') {
+          Turn.findOneAndUpdate({turn_id: turns[i].turn_id}, {$set: {status: 'inactive'}}, callback);
+        } else {
+          // Do nothing
+        }
+      }
+      console.log("Database updated @ " + date.toLocaleTimeString());
+    });
+}
+
+compare = function(check, current) {
+  if (check - current < 0) {
+    return 'expired';
+  } else if (check - current < 3600000) {
+    return 'inactive';
+  } else {
+    return 'active';
+  }
 }

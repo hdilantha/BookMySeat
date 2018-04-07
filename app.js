@@ -68,7 +68,7 @@ app.listen(port, () => {
 });
 
 // Update database
-var j = schedule.scheduleJob('30 * * * *', function(){
+var j = schedule.scheduleJob('*/60 * * * * *', function(){
   Turn.updateDatabase(() => {
     console.log('done');
   });

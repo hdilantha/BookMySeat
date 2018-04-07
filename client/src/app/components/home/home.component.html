@@ -10,7 +10,7 @@
       <input auto-complete type="text" class="form-control" value="" placeholder="Destination" [(ngModel)] = "destination" name = "destination" [source] = "sources">
     </div>
     <div class="col-md-4">
-      <input type="date" name="" class="form-control" value="" placeholder="Date" [(ngModel)] = "date" name = "date">
+      <input type="date" class="form-control" value="" min={{getToday()}} placeholder="Date" [(ngModel)] = "date" name = "date">
     </div>
   </div>
   <br>

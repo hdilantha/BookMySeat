@@ -20,6 +20,9 @@ export class DashboardComponent implements OnInit {
   turn_ids: any[];
   flag: number;
 
+  ac_turn_ids: any[];
+  inac_turn_ids: any[];
+
   constructor(private flashMessage: FlashMessagesService,
     private turnService: TurnService,
     private busService: BusService,
@@ -30,13 +33,25 @@ export class DashboardComponent implements OnInit {
       this.bookings = new Map();
       this.turns = new Map();
       this.turn_ids = [];
-      this.user = JSON.parse(localStorage.getItem('user')).name}
+      this.user = JSON.parse(localStorage.getItem('user')).name
+
+      this.ac_turn_ids = [];
+      this.inac_turn_ids = [];
+    }
+
 
   ngOnInit() {
     this.flag = 0;
     this.turnService.getAllTurns().subscribe(turns => {
       turns.turns.forEach((turn) => {
         this.turn_ids.push(turn.turn_id);
+
+        if (turn.status == 'active') {
+          this.ac_turn_ids.push(turn.turn_id);
+        } else {
+          this.inac_turn_ids.push(turn.turn_id);
+        }
+        
         this.bookService.getBookings(turn.turn_id).subscribe(resp => {
           var booking = resp.bookings;
           this.bookings.set(turn.turn_id, booking);
@@ -48,7 +63,7 @@ export class DashboardComponent implements OnInit {
   }
 
   checkStatus(status) {
-    return status === 'inactive';
+    return status === 'active';
   }
 
   ready() {
@@ -57,6 +72,18 @@ export class DashboardComponent implements OnInit {
 
   getTurn(turn_id) {
     return this.turns.get(turn_id);
+  }
+
+  AcTurn(turn_id) {
+    if (this.turns.get(turn_id).status == 'active') {
+      return true;
+    }
+  }
+
+  InacTurn(turn_id) {
+    if (this.turns.get(turn_id).status == 'inactive') {
+      return true;
+    }
   }
 
   getBooking(turn_id) {

@@ -30,6 +30,18 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  getToday() {
+    var date = (new Date()).toLocaleDateString().split('/');
+    if (date[0].length == 1){
+      date[0] = '0' + date[0];
+    }
+    if (date[1].length == 1){
+      date[1] = '0' + date[1];
+    }
+    var temp = date[2] + '-' + date[0] + '-' + date[1];
+    return temp;
+  }
+
   onClickSearch() {
     localStorage.setItem('starting', this.starting);
     localStorage.setItem('destination', this.destination);
